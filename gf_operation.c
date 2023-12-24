@@ -78,8 +78,6 @@ int init_gf(int extension_deg)
         exit(0);
     }
 
-    printf("init done %d \n", init_done);
-
     if (init_done != extension_deg)
     {
         if (init_done)
@@ -96,45 +94,6 @@ int init_gf(int extension_deg)
     }
 
     return 1;
-}
-
-int _gcd(int a, int b, int *x, int *y)
-{
-    if (a == 0)
-    {
-        *x = 0;
-        *y = 1;
-        return b;
-    }
-
-    int x_1, y_1;
-    int gcd = _gcd(b % a, a, &x_1, &y_1);
-
-    *x = y_1 - (b / a) * x_1;
-    *y = x_1;
-
-    return gcd;
-}
-
-int inv_mod(int a)
-{
-    int x, y;
-    int gcd = _gcd(a, gf_ord(), &x, &y);
-
-    if (gcd != 1)
-    {
-        printf("Inverse modulo n'existe pas.\n");
-        return -1;
-    }
-    else
-    {
-        return (x % gf_ord() + gf_ord()) % gf_ord();
-    }
-}
-
-int gf_inv(int x)
-{
-    return inv_mod(gf_antilog(gf_log(x)));
 }
 
 gf_t gf_pow(gf_t x, int i)
