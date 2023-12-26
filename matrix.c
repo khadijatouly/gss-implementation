@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 #include "matrix.h"
 
@@ -229,7 +230,9 @@ void no_binary_reed_solomon_secret_check_matrix(matrix_t H, gf_t *S, gf_t *L)
         }
     }
 }*/
-
+/**
+ * fonction qui permet de calculer une matrice generatrice G a partir d'une matrice de parite systematique
+ */
 void G_mat_pub(binarymatrix_t A, binarymatrix_t H_syst)
 {
     for (int i = 0; i < A.row_numbers; i++)
@@ -308,14 +311,16 @@ void expansion(gf_t *v, int len, binarymatrix_t A)
     }
 }
 
-// fonction qui permet d'étendre une matrice génératrice G
+/**
+ * fonction qui permet d'étendre une matrice génératrice G
+ */
 void expansion_gen_mat(matrix_t G, binarymatrix_t exp_G)
 {
     for (int i = 0; i < G.row_numbers; i++)
     {
         for (int j = 0; j < EXTENSION_DEGREE; j++)
         {
-            for (int k = 0; i < G.column_numbers; k++)
+            for (int k = 0; k < G.column_numbers; k++)
             {
                 for (int l = 0; l < EXTENSION_DEGREE; l++)
                 {
@@ -394,7 +399,7 @@ binarymatrix_t punct_block_matrix(binarymatrix_t exp_H, binarymatrix_t *proj_mat
 }
 
 /**
- * fonction qui permet de calculer le dual du multiplieur d'un code de reed solomon donnee
+ * fonction qui permet de calculer le dual du multiplieur d'un code de reed solomon donne
  */
 gf_t *multiplier_dual(gf_t *S, gf_t *L)
 {
@@ -415,4 +420,76 @@ gf_t *multiplier_dual(gf_t *S, gf_t *L)
         prod = 1;
     }
     return L_dual;
+}
+
+void random(unsigned char *u, int size)
+{
+    for (int i = 0; i < size; i++)
+    {
+        u[i] = rand() % gf_ord();
+        srand((unsigned int)time(NULL));
+    }
+}
+
+binarymatrix_t random_invertible(int ordre)
+{
+    binarymatrix_t A, U, L;
+    U = init_binary_matrix_id(ordre);
+    L = init_binary_matrix_id(ordre);
+    A = init_binary_matrix_id(ordre);
+    unsigned char *random_bytes = malloc(ordre * sizeof(int));
+    random(random_bytes, ordre);
+    for (int i = 0; i < ordre; i++)
+    {
+        for (int j = 0; j < ordre; j++)
+        {
+            if (i > j)
+            {
+                if (random_bytes[j] & 1)
+                {
+                    mat_set_coeff_to_one(L, i, j);
+                }
+            }
+            else if (i < j)
+            {
+                if (random_bytes[j] & 1)
+                {
+                    mat_set_coeff_to_one(U, i, j);
+                }
+            }
+        }
+        random(random_bytes, ordre);
+    }
+    product_binary_matrix(L, U, A);
+    free(random_bytes);
+    return A;
+}
+
+binarymatrix_t random_max_rank_matrix(int mu)
+{
+    binarymatrix_t A, B;
+    A = init_binary_matrix(EXTENSION_DEGREE, mu);
+    B = random_invertible(EXTENSION_DEGREE);
+    for (int i = 0; i < EXTENSION_DEGREE; i++)
+    {
+        for (int j = 0; j < mu; j++)
+        {
+            if (mat_coeff(B, i, j))
+            {
+                mat_set_coeff_to_one(A, i, j);
+            }
+        }
+    }
+    return A;
+}
+
+binarymatrix_t *random_max_rank_matrix_list(int size, int mu)
+{
+    binarymatrix_t *proj_mats;
+    proj_mats = (binarymatrix_t *)calloc(size, sizeof(binarymatrix_t));
+    for (int i = 0; i < size; i++)
+    {
+        proj_mats[i] = random_max_rank_matrix(mu);
+    }
+    return proj_mats;
 }
