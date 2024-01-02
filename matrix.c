@@ -166,7 +166,7 @@ int gauss_elim(binarymatrix_t A)
                 break;
             }
         }
-        printf("i= %d \n", i);
+        // printf("i= %d \n", i);
         if (i < A.row_numbers)
         {
             for (l = 0; l < k; ++l)
@@ -186,7 +186,7 @@ int gauss_elim(binarymatrix_t A)
             ++k;
         }
     }
-    display_binary_matrix(A);
+    // display_binary_matrix(A);
     return k;
 }
 
@@ -376,7 +376,7 @@ binarymatrix_t punct_block_matrix(binarymatrix_t exp_H, binarymatrix_t *proj_mat
     gf_t bit = 0;
     binarymatrix_t punct_matrix;
     punct_matrix = init_binary_matrix(exp_H.row_numbers, (exp_H.column_numbers / EXTENSION_DEGREE) * EXT_MU);
-    for (int j = 0, r = 0; j < exp_H.column_numbers && (r < exp_H.column_numbers / EXTENSION_DEGREE); j += EXTENSION_DEGREE)
+    for (int j = 0, r = 0; j < exp_H.column_numbers && (r < exp_H.column_numbers / EXTENSION_DEGREE); j += EXTENSION_DEGREE, r++)
     {
         for (int i = 0; i < exp_H.row_numbers; i++)
         {
@@ -393,7 +393,6 @@ binarymatrix_t punct_block_matrix(binarymatrix_t exp_H, binarymatrix_t *proj_mat
                 bit = 0;
             }
         }
-        r++;
     }
     return punct_matrix;
 }
@@ -424,10 +423,10 @@ gf_t *multiplier_dual(gf_t *S, gf_t *L)
 
 void random(unsigned char *u, int size)
 {
+    srand((unsigned int)time(NULL));
     for (int i = 0; i < size; i++)
     {
-        u[i] = rand() % gf_ord();
-        srand((unsigned int)time(NULL));
+        u[i] = rand();
     }
 }
 
@@ -491,5 +490,33 @@ binarymatrix_t *random_max_rank_matrix_list(int size, int mu)
     {
         proj_mats[i] = random_max_rank_matrix(mu);
     }
+    return proj_mats;
+}
+
+binarymatrix_t *generate_subspaces(int dimension, int size)
+{
+    unsigned char *random_bytes = malloc(dimension * sizeof(int));
+    random(random_bytes, dimension);
+    binarymatrix_t *proj_mats;
+    proj_mats = (binarymatrix_t *)calloc(size, sizeof(binarymatrix_t));
+    for (int i = 0; i < size; i++)
+    {
+        proj_mats[i] = init_binary_matrix(EXTENSION_DEGREE, dimension);
+        for (int j = 0; j < dimension; j++)
+        {
+            for (int k = 0; k < EXTENSION_DEGREE; k++)
+            {
+
+                if (gf_mul((random_bytes[j] % gf_ord() + 1), gf_pow(2, k)) & (1 << k))
+                {
+                    mat_set_coeff_to_one(proj_mats[i], k, j);
+                }
+            }
+            printf("rand = %d ", random_bytes[j] % gf_ord() + 1);
+        }
+        printf("\n");
+        random(random_bytes, dimension);
+    }
+    free(random_bytes);
     return proj_mats;
 }

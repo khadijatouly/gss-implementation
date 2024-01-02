@@ -73,4 +73,6 @@ binarymatrix_t random_invertible(int ordre);
 binarymatrix_t random_max_rank_matrix(int mu);
 binarymatrix_t *random_max_rank_matrix_list(int size, int mu);
 
+binarymatrix_t *generate_subspaces(int dimension, int size);
+
 #endif

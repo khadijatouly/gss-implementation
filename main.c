@@ -2,14 +2,15 @@
 #include <stdlib.h>
 #include "gf_operation.h"
 #include "matrix.h"
+#include "key_gen.h"
 
 int main()
 {
     /* code */
-    init_gf(3);
-    gf_t L[7] = {1, 1, 1, 1, 1, 1, 1};
-    gf_t S[7] = {1, 2, 4, 3, 6, 7, 5};
-    matrix_t G = init_matrix(3, 7);
+    // init_gf(3);
+    // gf_t L[7] = {1, 1, 1, 1, 1, 1, 1};
+    // gf_t S[7] = {1, 2, 4, 3, 6, 7, 5};
+    /*matrix_t G = init_matrix(3, 7);
     no_binary_reed_solomon_secret_check_matrix(G, S, L);
     G.coefficient[0][1] = 0;
     G.coefficient[0][2] = 0;
@@ -42,5 +43,20 @@ int main()
     display_binary_matrix(punct);
     no_binary_matrix_free(G);
     binary_matrix_free(exp_G);
+    unsigned char *tab = malloc(7 * sizeof(int));
+    random(tab, 7);
+    for (int i = 0; i < 7; i++)
+    {
+        printf("sans modulo %d \n", tab[i]);
+        printf("avec modulo %d \n", tab[i] % 3);
+    }*/
+    // key_pair_gen();
+    init_gf(EXTENSION_DEGREE);
+    binarymatrix_t *proj_mats = generate_subspaces(2, 7);
+    for (int i = 0; i < gf_ord(); i++)
+    {
+        display_binary_matrix(proj_mats[i]);
+    }
+
     // mingw32-make.exe
 }
