@@ -67,8 +67,6 @@ binarymatrix_t punct_block_matrix(binarymatrix_t exp_H, binarymatrix_t *proj_mat
 
 gf_t *multiplier_dual(gf_t *S, gf_t *L);
 
-void random(unsigned char *u, int size);
-
 binarymatrix_t random_invertible(int ordre);
 binarymatrix_t random_max_rank_matrix(int mu);
 binarymatrix_t *random_max_rank_matrix_list(int size, int mu);

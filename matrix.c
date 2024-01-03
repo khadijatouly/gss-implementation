@@ -4,6 +4,7 @@
 #include <time.h>
 
 #include "matrix.h"
+#include "rng.h"
 
 binarymatrix_t init_binary_matrix(int row_numbers, int column_numbers)
 {
@@ -183,6 +184,8 @@ int gauss_elim(binarymatrix_t A)
                     matrix_row_xor(A, l, k);
                 }
             }
+            printf("gauss : j = %d et k = %d \n", j, k);
+        display_binary_matrix(A);
             ++k;
         }
     }
@@ -421,14 +424,6 @@ gf_t *multiplier_dual(gf_t *S, gf_t *L)
     return L_dual;
 }
 
-void random(unsigned char *u, int size)
-{
-    srand((unsigned int)time(NULL));
-    for (int i = 0; i < size; i++)
-    {
-        u[i] = rand();
-    }
-}
 
 binarymatrix_t random_invertible(int ordre)
 {
@@ -436,28 +431,28 @@ binarymatrix_t random_invertible(int ordre)
     U = init_binary_matrix_id(ordre);
     L = init_binary_matrix_id(ordre);
     A = init_binary_matrix_id(ordre);
-    unsigned char *random_bytes = malloc(ordre * sizeof(int));
-    random(random_bytes, ordre);
+    unsigned char *random_bytes = malloc((ordre-1)/8 +1);
+    randombytes(random_bytes, (ordre-1)/8 +1);
     for (int i = 0; i < ordre; i++)
     {
         for (int j = 0; j < ordre; j++)
         {
             if (i > j)
             {
-                if (random_bytes[j] & 1)
+                if ((random_bytes[j/8] >> (j%8)) & 1)
                 {
                     mat_set_coeff_to_one(L, i, j);
                 }
             }
             else if (i < j)
             {
-                if (random_bytes[j] & 1)
+                if ((random_bytes[j/8] >> (j%8)) & 1)
                 {
                     mat_set_coeff_to_one(U, i, j);
                 }
             }
         }
-        random(random_bytes, ordre);
+        randombytes(random_bytes, (ordre-1)/8 +1);
     }
     product_binary_matrix(L, U, A);
     free(random_bytes);
@@ -493,7 +488,7 @@ binarymatrix_t *random_max_rank_matrix_list(int size, int mu)
     return proj_mats;
 }
 
-binarymatrix_t *generate_subspaces(int dimension, int size)
+/*binarymatrix_t *generate_subspaces(int dimension, int size)
 {
     unsigned char *random_bytes = malloc(dimension * sizeof(int));
     random(random_bytes, dimension);
@@ -519,4 +514,4 @@ binarymatrix_t *generate_subspaces(int dimension, int size)
     }
     free(random_bytes);
     return proj_mats;
-}
+}*/

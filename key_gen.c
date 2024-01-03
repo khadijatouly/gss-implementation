@@ -4,6 +4,7 @@
 #include <string.h>
 
 #include "key_gen.h"
+#include "gf_operation.h"
 
 void generate_random_vector(int m, gf_t *vect)
 {
@@ -12,7 +13,7 @@ void generate_random_vector(int m, gf_t *vect)
     gf_t *U;
     U = (gf_t *)calloc(gf_card(), sizeof(gf_t));
     unsigned char *random_bytes = malloc(gf_card() * sizeof(gf_t));
-    random(random_bytes, gf_card() * sizeof(gf_t));
+    randombytes(random_bytes, gf_card() * sizeof(gf_t));
     U[0] = 1;
     for (int i = 0; i < gf_card(); i++)
     {
@@ -31,8 +32,8 @@ void generate_random_vector(int m, gf_t *vect)
 
 void rs_support(gf_t *S, gf_t *L)
 {
-    unsigned char *random_bytes = malloc(gf_ord() * sizeof(int));
-    random(random_bytes, gf_ord());
+    unsigned char *random_bytes = malloc(ss_length/8);
+    randombytes(random_bytes, ss_length/8);
     unsigned long int seed = 0;
     int i;
     for (i = 0; i < sizeof(random_bytes); i++)
@@ -49,7 +50,7 @@ void rs_support(gf_t *S, gf_t *L)
     i = 1; // pour l'instant
     do
     {
-        i = rand() % gf_ord(); // generate a random number between 1 and l-1
+        i = rand() % gf_ord(); // generate a random number between 1 and gf_ord()-1
     } while (gcd(gf_ord(), i) != 1);
     gf_t gamma = gf_pow(beta, i);
     gf_t *Sgamma = (gf_t *)calloc(gf_ord(), sizeof(gf_t));
@@ -75,13 +76,14 @@ void rs_support(gf_t *S, gf_t *L)
 
 int key_pair_gen()
 {
-    // int return_value = 1;
+    //int return_value = 1;
     gf_t *S, *L;
     init_gf(EXTENSION_DEGREE);
     int n = gf_ord();
-    matrix_t H = init_matrix(3, n);
-    binarymatrix_t punct_mat = init_binary_matrix(H.row_numbers * EXTENSION_DEGREE, H.column_numbers * EXIT_SUCCESS);
-    // while (return_value != punct_mat.row_numbers)
+    int k = n/2;
+    matrix_t H = init_matrix(k, n);
+    binarymatrix_t punct_mat;
+    //while (return_value != punct_mat.row_numbers)
     //{
     S = (gf_t *)calloc(n, sizeof(gf_t));
     L = (gf_t *)calloc(n, sizeof(gf_t));
@@ -92,17 +94,14 @@ int key_pair_gen()
     expansion_check_mat(H, exp_H);
     display_binary_matrix(exp_H);
     binarymatrix_t *proj_mats = random_max_rank_matrix_list(n, EXT_MU);
-    for (int i = 0; i < gf_ord(); i++)
-    {
-        display_binary_matrix(proj_mats[i]);
-    }
+    punct_mat = init_binary_matrix(H.row_numbers * EXTENSION_DEGREE, H.column_numbers * EXT_MU);
     punct_mat = punct_block_matrix(exp_H, proj_mats);
     display_binary_matrix(punct_mat);
     gauss_elim(punct_mat);
     display_binary_matrix(punct_mat);
-    // }
-    binary_matrix_free(exp_H);
+    //}
     binary_matrix_free(punct_mat);
+    binary_matrix_free(exp_H);
     no_binary_matrix_free(H);
     return 1;
 }

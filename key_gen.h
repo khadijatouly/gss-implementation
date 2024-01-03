@@ -1,5 +1,7 @@
 #include "matrix.h"
+#include "param.h"
 #include "util.h"
+#include "rng.h"
 
 #ifndef KEY_GEN
 #define KEY_GEN

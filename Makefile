@@ -1,8 +1,8 @@
 # Project: shrivastava
 # Makefile created by ouzdeville
 CC       = gcc
-OBJ      = gf_operation.o matrix.o key_gen.o util.o main.o
-LINKOBJ  = gf_operation.o matrix.o key_gen.o util.o main.o
+OBJ      = gf_operation.o rng.o matrix.o key_gen.o util.o main.o
+LINKOBJ  = gf_operation.o rng.o matrix.o key_gen.o util.o main.o
 LIBS     = -L/usr/lib -lssl -lcrypto
 INCS     = 
 CXXINCS  = 
@@ -19,7 +19,7 @@ clean: clean-custom
 	${RM} $(OBJ) $(BIN)
 
 $(BIN): $(OBJ)
-	$(CC) -O3 $(LINKOBJ) -o $(BIN) 
+	$(CC) -O3 $(LINKOBJ) -o $(BIN) $(LIBS)
 
 %.o: %.c
 	$(CC) $(CPPFLAGS) $(CFLAGS) -c -o $@ $<
