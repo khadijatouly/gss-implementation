@@ -29,8 +29,8 @@ unsigned gf_prim_poly[MAX_EXTENSION_DEGREE + 1] = {
 };
 
 void view_log(gf_t *tab)
-{
-    for (int i = 0; i < gf_card(); ++i)
+{   int i = 0;
+    for ( i = 0; i < gf_card(); ++i)
     {
         printf("i : %d =  %d \n", i, tab[i]);
     }
@@ -42,8 +42,8 @@ void init_gf_antilog()
     printf("je suis dans la fonction antilog \n");
     gf_antilog = (gf_t *)malloc(gf_card() * sizeof(gf_t));
     gf_antilog[0] = gf_antilog[gf_ord()] = 1;
-
-    for (int i = 1; i < gf_ord(); ++i)
+    int i = 1;
+    for (i = 1; i < gf_ord(); ++i)
     {
         gf_antilog[i] = gf_antilog[i - 1] << 1;
         if (gf_antilog[i] & (1 << gf_extdeg()))
@@ -60,7 +60,8 @@ void init_gf_log()
     printf("je suis dans la fonction log \n");
     gf_log = (gf_t *)malloc(gf_card() * sizeof(gf_t));
     gf_log[0] = gf_ord(); // log of 0 par convention
-    for (int i = 0; i < gf_ord(); ++i)
+    int i = 0;
+    for (i = 0; i < gf_ord(); ++i)
     {
         gf_log[gf_antilog[i]] = i;
     }

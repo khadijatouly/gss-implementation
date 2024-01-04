@@ -15,7 +15,8 @@ void generate_random_vector(int m, gf_t *vect)
     unsigned char *random_bytes = malloc(gf_card() * sizeof(gf_t));
     randombytes(random_bytes, gf_card() * sizeof(gf_t));
     U[0] = 1;
-    for (int i = 0; i < gf_card(); i++)
+    int i = 0;
+    for (i = 0; i < gf_card(); i++)
     {
         U[i] = i;
     }
