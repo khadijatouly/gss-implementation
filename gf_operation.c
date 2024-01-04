@@ -51,7 +51,7 @@ void init_gf_antilog()
             gf_antilog[i] ^= gf_prim_poly[gf_extdeg()];
         }
     }
-    view_log(gf_antilog);
+    //view_log(gf_antilog);
 }
 
 // fonction qui calcule la table log de Fp
@@ -65,7 +65,7 @@ void init_gf_log()
     {
         gf_log[gf_antilog[i]] = i;
     }
-    view_log(gf_log);
+    //view_log(gf_log);
 }
 
 // fonction qui permet d'initialiser les tales log et antilog a partir du degre du polynome

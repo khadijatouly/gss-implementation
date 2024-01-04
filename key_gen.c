@@ -32,7 +32,7 @@ void generate_random_vector(int m, gf_t *vect)
     free(random_bytes);
 }
 
-void init_random_element(gf_t *U, int iszeroPermit) {
+void init_random_element(gf_t *U) {
 	int i, j, v;
 	gf_t tmp;
 	unsigned char *random_bytes = 0;
@@ -61,15 +61,15 @@ void rs_support(gf_t *S, gf_t *L)
     int i=0; 
     U = (gf_t *)calloc(gf_card(), sizeof(gf_t));
     V= (gf_t *)calloc(gf_card(), sizeof(gf_t));
-    init_random_element(U, 1);
-    init_random_element(V,0);
+    init_random_element(U);
+    init_random_element(V);
+    display_no_binary_vect(U,code_length);
+	display_no_binary_vect(V,code_length);
     for ( i = 0; i < code_length; i++)
     {
         S[i]=U[i];
         L[i]=V[i];
     }
-    display_no_binary_vect(U,code_length);
-	display_no_binary_vect(V,code_length);
     
 }
 
