@@ -72,14 +72,15 @@ void rs_support(gf_t *S, gf_t *L)
     V= (gf_t *)calloc(gf_card(), sizeof(gf_t));
     srand(time(NULL));
     generate_random_vector(code_length, U);
-    display_no_binary_vect(U,code_length);
     generate_random_vector(code_length, V);
-	display_no_binary_vect(V,code_length);
     for ( i = 0; i < code_length; i++)
     {
         S[i]=U[i];
-        L[i]=V[i];
+        L[i]=gf_antilog[V[i]%gf_card()];
     }
+
+    display_no_binary_vect(S,code_length);
+	display_no_binary_vect(L,code_length);
     
 }
 
