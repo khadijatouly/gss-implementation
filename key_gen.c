@@ -101,11 +101,11 @@ int key_pair_gen()
     printf("Colonne=%d\n",punct_mat.column_numbers);
     printf("Ligne=%d\n",punct_mat.row_numbers);
     //display_binary_matrix(punct_mat);
-    gauss_elim(punct_mat);
+    //gauss_elim(punct_mat);
     //display_binary_matrix(punct_mat);
     //}
-    binary_matrix_free(punct_mat);
-    binary_matrix_free(exp_H);
-    no_binary_matrix_free(H);
+    //binary_matrix_free(punct_mat);
+    //binary_matrix_free(exp_H);
+    //no_binary_matrix_free(H);
     return 1;
 }
