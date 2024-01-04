@@ -32,48 +32,50 @@ void generate_random_vector(int m, gf_t *vect)
     free(random_bytes);
 }
 
+void init_random_element(gf_t *U) {
+	int i, j, v;
+	gf_t tmp;
+	unsigned char *random_bytes = 0;
+	random_bytes = malloc(gf_ord() * sizeof(gf_t));
+	randombytes(random_bytes, gf_ord() * sizeof(gf_t));
+	for (i = 0; i <= gf_ord(); i++) {
+		U[i] = i;
+	}
+
+	for (j = 1; j < gf_ord(); j++) {
+
+		v = ((gf_t *) random_bytes)[j] % (j + 1);
+		tmp = U[j];
+		U[j] = U[v + 1];
+		U[v + 1] = tmp;
+	}
+
+	free(random_bytes);
+}
+
+void Remove_From_U(gf_t elt, gf_t *U) {
+	int k;
+	for (k = 0; k <= gf_ord(); k++) {
+		if (U[k] == elt) {
+			U[k] = 0;
+			break;
+		}
+	}
+}
+
 void rs_support(gf_t *S, gf_t *L)
-{
-    unsigned char *random_bytes = malloc(ss_length/8);
-    randombytes(random_bytes, ss_length/8);
-    unsigned long int seed = 0;
-    int i;
-    for (i = 0; i < sizeof(random_bytes); i++)
+{   gf_t *U, *V;
+    int i=0; 
+    U = (gf_t *)calloc(gf_card(), sizeof(gf_t));
+    V= (gf_t *)calloc(gf_card(), sizeof(gf_t));
+    init_random_element(U);
+    init_random_element(V);
+    Remove_From_U(gf_zero(), V);
+    for ( i = 0; i < code_length; i++)
     {
-        seed = (seed << 8) | random_bytes[i];
+        L[i]=V[i];
     }
-    // srand(seed);
-    time_t t;
-
-    srand(((unsigned)time(&t)) + seed);
-    int k, j;
-    gf_t beta = gf_pow(2, seed);
-    // make random i in  [1, l − 1] and i^l=1
-    i = 1; // pour l'instant
-    do
-    {
-        i = rand() % gf_ord(); // generate a random number between 1 and gf_ord()-1
-    } while (gcd(gf_ord(), i) != 1);
-    gf_t gamma = gf_pow(beta, i);
-    gf_t *Sgamma = (gf_t *)calloc(gf_ord(), sizeof(gf_t));
-
-    Sgamma[0] = gf_unit();
-    Sgamma[1] = gamma;
-    for (k = 2; k < gf_ord(); k++)
-    {
-        Sgamma[k] = gf_mul(gamma, Sgamma[k - 1]);
-        // printf("%d ", Sgamma[k]);
-    }
-
-    for (j = 0; j < gf_ord(); j++)
-    {
-        // make random i_j and i_jbetta
-        int i_j = rand() % gf_ord();
-        int i_jbetta = rand() % gf_ord();
-        L[j] = gf_pow(2, i_jbetta);
-        gf_t alphaj = gf_pow(2, i_j);
-        S[j] = gf_mul(alphaj, Sgamma[j]);
-    }
+    
 }
 
 int key_pair_gen()
