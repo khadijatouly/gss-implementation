@@ -98,9 +98,11 @@ int key_pair_gen()
     binarymatrix_t *proj_mats = random_max_rank_matrix_list(n, EXT_MU);
     punct_mat = init_binary_matrix(H.row_numbers * EXTENSION_DEGREE, H.column_numbers * EXT_MU);
     punct_mat = punct_block_matrix(exp_H, proj_mats);
-    display_binary_matrix(punct_mat);
+    printf("Colonne=%d\n",punct_mat.column_numbers);
+    printf("Ligne=%d\n",punct_mat.row_numbers);
+    //display_binary_matrix(punct_mat);
     gauss_elim(punct_mat);
-    display_binary_matrix(punct_mat);
+    //display_binary_matrix(punct_mat);
     //}
     binary_matrix_free(punct_mat);
     binary_matrix_free(exp_H);
