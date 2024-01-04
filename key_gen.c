@@ -76,8 +76,8 @@ void rs_support(gf_t *S, gf_t *L)
         S[i]=U[i];
         L[i]=V[i];
     }
-    print_vect(S,code_length, "Support=",0.8);
-	print_vect(L,code_length, "Multiplier=",0.8);
+    display_no_binary_vect(S,code_length);
+	display_no_binary_vect(L,code_length);
     
 }
 

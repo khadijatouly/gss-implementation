@@ -552,6 +552,18 @@ void print_vect(gf_t *v, int len, char *text,float scale)
 	printf(")$$\n");
 	printf("}\\]\n");
 }
+void display_no_binary_vect(gf_t *v, int len)
+{
+    int i = 0;
+    for (i = 0; i < len; i++)
+    {
+       
+            printf("%d ", v[i]);
+        
+        
+    }
+    printf("\n");
+}
 
 /*binarymatrix_t *generate_subspaces(int dimension, int size)
 {
