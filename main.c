@@ -5,7 +5,7 @@
 #include "key_gen.h"
 #include "param.h"
 
-int main()
+void main()
 {
     /* code */
     key_pair_gen();
