@@ -14,10 +14,14 @@ void generate_random_vector(int m, gf_t *vect)
     int i=0;
     U = (gf_t *)calloc(gf_card(), sizeof(gf_t));
     unsigned char *random_bytes = malloc(gf_card() * sizeof(gf_t));
-    for (i=0; i<48; i++)
-        entropy_input[i] = i;
+    unsigned char personalization_string[48];
+    srand(time(NULL));
+    for (i=0; i<48; i++){
+        entropy_input[i] = rand();
+        personalization_string[i] = rand();
+        }
 
-    randombytes_init(entropy_input, NULL, 256);
+    randombytes_init(entropy_input, personalization_string, 256);
     randombytes(random_bytes, gf_card() * sizeof(gf_t));
     U[0] = 1;
     for (i = 0; i < gf_card(); i++)
