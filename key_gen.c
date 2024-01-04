@@ -16,11 +16,10 @@ void generate_random_vector(int m, gf_t *vect)
     unsigned char *random_bytes = malloc(gf_card() * sizeof(gf_t));
     for (i=0; i<48; i++)
         entropy_input[i] = i;
-        
+
     randombytes_init(entropy_input, NULL, 256);
     randombytes(random_bytes, gf_card() * sizeof(gf_t));
     U[0] = 1;
-    int i = 0;
     for (i = 0; i < gf_card(); i++)
     {
         U[i] = i;
