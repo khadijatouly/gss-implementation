@@ -105,7 +105,7 @@ int key_pair_gen()
     printf("Ligne=%d\n",punct_mat.row_numbers);
     display_binary_matrix(punct_mat);
     gauss_elim(punct_mat);
-    //display_binary_matrix(punct_mat);
+    display_binary_matrix(punct_mat);
     //}
     //binary_matrix_free(punct_mat);
     //binary_matrix_free(exp_H);
