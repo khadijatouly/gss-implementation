@@ -38,8 +38,8 @@ void init_random_element(gf_t *U, int iszeroPermit) {
 	unsigned char *random_bytes = 0;
 	random_bytes = malloc(gf_ord() * sizeof(gf_t));
 	randombytes(random_bytes, gf_ord() * sizeof(gf_t));
-    j=1;
-	for (i = j; i <= gf_ord(); i++) {
+   
+	for (i = 1; i <= gf_ord(); i++) {
 		U[i] = i;
 	}
 
