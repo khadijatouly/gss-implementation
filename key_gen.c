@@ -5,6 +5,7 @@
 
 #include "key_gen.h"
 #include "gf_operation.h"
+#include "param.h"
 
 void generate_random_vector(int m, gf_t *vect)
 {
@@ -72,6 +73,7 @@ void rs_support(gf_t *S, gf_t *L)
         gf_t alphaj = gf_pow(2, i_j);
         S[j] = gf_mul(alphaj, Sgamma[j]);
     }
+    free(random_bytes);
 }
 
 int key_pair_gen()
@@ -103,5 +105,7 @@ int key_pair_gen()
     binary_matrix_free(punct_mat);
     binary_matrix_free(exp_H);
     no_binary_matrix_free(H);
+    free(S);
+    free(L);
     return 1;
 }
