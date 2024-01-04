@@ -84,21 +84,21 @@ int key_pair_gen()
     //int return_value = 1;
     gf_t *S, *L;
     init_gf(EXTENSION_DEGREE);
-    int n = gf_ord();
-    int k = n/2;
-    matrix_t H = init_matrix(k, n);
+    //int n = code_length;
+    //int k = n/2;
+    matrix_t H = init_matrix(code_dimension, code_length);
     binarymatrix_t punct_mat;
     //while (return_value != punct_mat.row_numbers)
     //{
-    S = (gf_t *)calloc(n, sizeof(gf_t));
-    L = (gf_t *)calloc(n, sizeof(gf_t));
+    S = (gf_t *)calloc(code_length, sizeof(gf_t));
+    L = (gf_t *)calloc(code_length, sizeof(gf_t));
     rs_support(S, L);
     no_binary_reed_solomon_secret_check_matrix(H, S, L);
     display_no_binary_matrix(H);
     binarymatrix_t exp_H = init_binary_matrix(H.row_numbers * EXTENSION_DEGREE, H.column_numbers * EXTENSION_DEGREE);
     expansion_check_mat(H, exp_H);
     display_binary_matrix(exp_H);
-    binarymatrix_t *proj_mats = random_max_rank_matrix_list(n, EXT_MU);
+    binarymatrix_t *proj_mats = random_max_rank_matrix_list(code_length, EXT_MU);
     punct_mat = init_binary_matrix(H.row_numbers * EXTENSION_DEGREE, H.column_numbers * EXT_MU);
     punct_mat = punct_block_matrix(exp_H, proj_mats);
     printf("Colonne=%d\n",punct_mat.column_numbers);

@@ -3,9 +3,10 @@
 
 #define BITS_PER_LONG (8 * sizeof(unsigned long))
 #define EXTENSION_DEGREE 5
-#define order 4
+#define t 20
 #define code_length 28
-#define pol_deg 1
+#define mt (t*EXTENSION_DEGREE)
+#define code_dimension (code_length-mt)
 #define EXT_MU 3
 #define ss_length 64
 
