@@ -95,7 +95,9 @@ int key_pair_gen()
     rs_support(S, L);
     no_binary_reed_solomon_secret_check_matrix(H, S, L);
     display_no_binary_matrix(H);
-    binarymatrix_t exp_H = init_binary_matrix(H.row_numbers * EXTENSION_DEGREE, H.column_numbers * EXTENSION_DEGREE);
+     printf("Colonne=%d\n",H.column_numbers);
+    printf("Ligne=%d\n",H.row_numbers);
+   /* binarymatrix_t exp_H = init_binary_matrix(H.row_numbers * EXTENSION_DEGREE, H.column_numbers * EXTENSION_DEGREE);
     expansion_check_mat(H, exp_H);
     display_binary_matrix(exp_H);
     binarymatrix_t *proj_mats = random_max_rank_matrix_list(code_length, EXT_MU);
@@ -103,6 +105,7 @@ int key_pair_gen()
     punct_mat = punct_block_matrix(exp_H, proj_mats);
     printf("Colonne=%d\n",punct_mat.column_numbers);
     printf("Ligne=%d\n",punct_mat.row_numbers);
+    */
     //display_binary_matrix(punct_mat);
     //gauss_elim(punct_mat);
     //display_binary_matrix(punct_mat);
