@@ -79,8 +79,8 @@ void rs_support(gf_t *S, gf_t *L)
         L[i]=gf_antilog[V[i]%gf_card()];
     }
 
-    display_no_binary_vect(S,code_length);
-	display_no_binary_vect(L,code_length);
+    //display_no_binary_vect(S,code_length);
+	//display_no_binary_vect(L,code_length);
     
 }
 
