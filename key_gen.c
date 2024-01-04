@@ -5,7 +5,7 @@
 
 #include "key_gen.h"
 #include "gf_operation.h"
-unsigned char entropy_input[48];
+
 void generate_random_vector(int m, gf_t *vect)
 {
     int v;
@@ -14,6 +14,7 @@ void generate_random_vector(int m, gf_t *vect)
     int i=0;
     U = (gf_t *)calloc(gf_card(), sizeof(gf_t));
     unsigned char *random_bytes = malloc(gf_card() * sizeof(gf_t));
+    unsigned char entropy_input[48];
     unsigned char personalization_string[48];
     srand(time(NULL));
     for (i=0; i<48; i++){
