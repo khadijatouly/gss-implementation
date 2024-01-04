@@ -86,7 +86,7 @@ int key_pair_gen()
     init_gf(EXTENSION_DEGREE);
     //int n = code_length;
     //int k = n/2;
-    matrix_t H = init_matrix(code_dimension, code_length);
+    matrix_t H = init_matrix(t, code_length);
     binarymatrix_t punct_mat;
     //while (return_value != punct_mat.row_numbers)
     //{
