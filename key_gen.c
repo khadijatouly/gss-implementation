@@ -103,7 +103,7 @@ int key_pair_gen()
     punct_mat = punct_block_matrix(exp_H, proj_mats);
     printf("Colonne=%d\n",punct_mat.column_numbers);
     printf("Ligne=%d\n",punct_mat.row_numbers);
-    display_binary_matrix(punct_mat);
+    //display_binary_matrix(punct_mat);
     //gauss_elim(punct_mat);
     //display_binary_matrix(punct_mat);
     //}
