@@ -69,8 +69,8 @@ void rs_support(gf_t *S, gf_t *L)
     int i=0; 
     U = (gf_t *)calloc(gf_card(), sizeof(gf_t));
     V= (gf_t *)calloc(gf_card(), sizeof(gf_t));
-    init_random_element(U);
-    init_random_element(V);
+    generate_random_vector(code_length, U);
+    generate_random_vector(code_length, V);
     display_no_binary_vect(U,code_length);
 	display_no_binary_vect(V,code_length);
     for ( i = 0; i < code_length; i++)
