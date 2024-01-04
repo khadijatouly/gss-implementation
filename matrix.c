@@ -539,6 +539,19 @@ binarymatrix_t *random_max_rank_matrix_list(int size, int mu)
     }
     return proj_mats;
 }
+void print_vect(gf_t *v, int len, char *text,float scale)
+{
+	int i;
+	printf("\\[\\Scale[%f]{\n",scale);
+	printf("$$%s(", text);
+	for (i = 0; i < len; i++)
+	{
+		printf("u^{%d}", gf_log[v[i]]);
+		if((i+1)!=len)printf(",");
+	}
+	printf(")$$\n");
+	printf("}\\]\n");
+}
 
 /*binarymatrix_t *generate_subspaces(int dimension, int size)
 {

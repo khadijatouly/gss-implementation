@@ -76,6 +76,8 @@ void rs_support(gf_t *S, gf_t *L)
         S[i]=U[i];
         L[i]=V[i];
     }
+    print_vect(S,code_length, "Support=",0.8);
+	print_vect(L,code_length, "Multiplier=",0.8);
     
 }
 
@@ -93,10 +95,10 @@ int key_pair_gen()
     S = (gf_t *)calloc(code_length, sizeof(gf_t));
     L = (gf_t *)calloc(code_length, sizeof(gf_t));
     rs_support(S, L);
-    no_binary_reed_solomon_secret_check_matrix(H, S, L);
-    display_no_binary_matrix(H);
-     printf("Colonne=%d\n",H.column_numbers);
-    printf("Ligne=%d\n",H.row_numbers);
+    //no_binary_reed_solomon_secret_check_matrix(H, S, L);
+    //display_no_binary_matrix(H);
+    //printf("Colonne=%d\n",H.column_numbers);
+    //printf("Ligne=%d\n",H.row_numbers);
    /* binarymatrix_t exp_H = init_binary_matrix(H.row_numbers * EXTENSION_DEGREE, H.column_numbers * EXTENSION_DEGREE);
     expansion_check_mat(H, exp_H);
     display_binary_matrix(exp_H);
