@@ -16,7 +16,7 @@ void generate_random_vector(int m, gf_t *vect)
     unsigned char *random_bytes = malloc(gf_card() * sizeof(gf_t));
     unsigned char entropy_input[48];
     unsigned char personalization_string[48];
-    srand(time(NULL));
+    
     for (i=0; i<48; i++){
         entropy_input[i] = rand();
         personalization_string[i] = rand();
@@ -70,9 +70,10 @@ void rs_support(gf_t *S, gf_t *L)
     int i=0; 
     U = (gf_t *)calloc(gf_card(), sizeof(gf_t));
     V= (gf_t *)calloc(gf_card(), sizeof(gf_t));
+    srand(time(NULL));
     generate_random_vector(code_length, U);
-    generate_random_vector(code_length, V);
     display_no_binary_vect(U,code_length);
+    generate_random_vector(code_length, V);
 	display_no_binary_vect(V,code_length);
     for ( i = 0; i < code_length; i++)
     {
