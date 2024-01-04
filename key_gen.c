@@ -73,6 +73,7 @@ void rs_support(gf_t *S, gf_t *L)
     Remove_From_U(gf_zero(), V);
     for ( i = 0; i < code_length; i++)
     {
+        S[i]=U[i];
         L[i]=V[i];
     }
     
