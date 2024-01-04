@@ -95,7 +95,8 @@ void display_binary_matrix(binarymatrix_t A)
     int i = 0;
     for (i = 0; i < A.row_numbers; i++)
     {
-        for (int j = 0; j < A.column_numbers; j++)
+        int j = 0;
+    for (j = 0; j < A.column_numbers; j++)
         {
             printf("%lu ", mat_coeff(A, i, j));
         }
@@ -109,7 +110,8 @@ void display_no_binary_matrix(matrix_t A)
     int i = 0;
     for (i = 0; i < A.row_numbers; i++)
     {
-        for (int j = 0; j < A.column_numbers; j++)
+        int j = 0;
+    for (j = 0; j < A.column_numbers; j++)
         {
             printf("%d ", A.coefficient[i][j]);
         }
@@ -123,7 +125,8 @@ void transpose_binary_matrix(binarymatrix_t A, binarymatrix_t transpose_A)
     int i = 0;
     for (i = 0; i < A.row_numbers; i++)
     {
-        for (int j = 0; j < A.column_numbers; j++)
+        int j = 0;
+    for (j = 0; j < A.column_numbers; j++)
         {
             if (mat_coeff(A, i, j))
             {
@@ -138,7 +141,8 @@ void transpose_no_binary_matrix(matrix_t A, matrix_t transpose_A)
     int i = 0;
     for (i = 0; i < A.row_numbers; i++)
     {
-        for (int j = 0; j < A.column_numbers; j++)
+        int j = 0;
+    for (j = 0; j < A.column_numbers; j++)
         {
             transpose_A.coefficient[j][i] = A.coefficient[i][j];
         }
@@ -151,9 +155,11 @@ void product_binary_matrix(binarymatrix_t A, binarymatrix_t B, binarymatrix_t pr
     int i = 0;
     for (i = 0; i < A.row_numbers; i++)
     {
-        for (int j = 0; j < B.column_numbers; j++)
+        int j = 0;
+    for (j = 0; j < B.column_numbers; j++)
         {
-            for (int k = 0; k < B.row_numbers; k++)
+            int k = 0;
+    for (k = 0; k < B.row_numbers; k++)
             {
                 bit ^= mat_coeff(A, i, k) & mat_coeff(B, k, j);
             }
@@ -215,7 +221,8 @@ void no_binary_reed_solomon_secret_check_matrix(matrix_t H, gf_t *S, gf_t *L)
     int i = 1;
     for (i = 1; i < H.row_numbers; i++)
     {
-        for (int j = 0; j < H.column_numbers; j++)
+        int j = 0;
+    for (j = 0; j < H.column_numbers; j++)
         {
             H.coefficient[i][j] = gf_mul(H.coefficient[i - 1][j], S[j]);
         }
@@ -231,14 +238,16 @@ void no_binary_reed_solomon_secret_check_matrix(matrix_t H, gf_t *S, gf_t *L)
         H.coefficient[0][i] = L[i];
     }
 
-    for (int j = 0; j < code_length; ++j)
+    int j = 0;
+    for (j = 0; j < code_length; ++j)
     {
         int i = 0;
     for (i = 0; i < H.row_numbers; ++i)
         {
             hij = gf_mul(hij, S[j]);
             h = hij;
-            for (int k = 0; k < EXTENSION_DEGREE; ++k)
+            int k = 0;
+    for (k = 0; k < EXTENSION_DEGREE; ++k)
             {
                 if (h & (1 << k))
                 {
@@ -256,7 +265,8 @@ void G_mat_pub(binarymatrix_t A, binarymatrix_t H_syst)
     int i = 0;
     for (i = 0; i < A.row_numbers; i++)
     {
-        for (int j = 0; j < A.row_numbers; j++)
+        int j = 0;
+    for (j = 0; j < A.row_numbers; j++)
         {
             mat_set_coeff_to_one(A, j, j);
         }
@@ -285,7 +295,8 @@ void G_mat_pub(binarymatrix_t A, binarymatrix_t H_syst)
         pk += H.rwdcnt * sizeof(unsigned long);
         for (int j = i + 1; j < i + order; j++)
         {
-            for (int k = 0; k < r; k++)
+            int k = 0;
+    for (k = 0; k < r; k++)
             {
                 ind = j ^ k ^ i;
                 if (mat_coeff(H, i, ind))
@@ -309,7 +320,8 @@ void product_vector_matrix(unsigned long *result, unsigned char *u, binarymatrix
     {
         if ((u[i / 8] >> (i % 8)) & 1)
         {
-            for (int j = 0; j < A.rwdcnt; j++)
+            int j = 0;
+    for (j = 0; j < A.rwdcnt; j++)
             {
                 result[j] ^= A.element[i][j];
             }
@@ -323,7 +335,8 @@ void expansion(gf_t *v, int len, binarymatrix_t A)
     int i = 0;
     for (i = 0; i < len; i++)
     {
-        for (int j = 0; j < EXTENSION_DEGREE; j++)
+        int j = 0;
+    for (j = 0; j < EXTENSION_DEGREE; j++)
         {
             if (v[i] & (1 << j))
             {
@@ -341,11 +354,14 @@ void expansion_gen_mat(matrix_t G, binarymatrix_t exp_G)
     int i = 0;
     for (i = 0; i < G.row_numbers; i++)
     {
-        for (int j = 0; j < EXTENSION_DEGREE; j++)
+        int j = 0;
+    for (j = 0; j < EXTENSION_DEGREE; j++)
         {
-            for (int k = 0; k < G.column_numbers; k++)
+            int k = 0;
+    for (k = 0; k < G.column_numbers; k++)
             {
-                for (int l = 0; l < EXTENSION_DEGREE; l++)
+                int l = 0;
+    for (l = 0; l < EXTENSION_DEGREE; l++)
                 {
                     if (gf_mul(G.coefficient[i][k], gf_pow(2, j)) & (1 << l))
                     {
@@ -362,14 +378,17 @@ void expansion_gen_mat(matrix_t G, binarymatrix_t exp_G)
  */
 void expansion_check_mat(matrix_t H, binarymatrix_t exp_H)
 {
-    for (int j = 0; j < H.column_numbers; j++)
+    int j = 0;
+    for (j = 0; j < H.column_numbers; j++)
     {
-        for (int k = 0; k < EXTENSION_DEGREE; k++)
+        int k = 0;
+    for (k = 0; k < EXTENSION_DEGREE; k++)
         {
             int i = 0;
     for (i = 0; i < H.row_numbers; i++)
             {
-                for (int l = 0; l < EXTENSION_DEGREE; l++)
+                int l = 0;
+    for (l = 0; l < EXTENSION_DEGREE; l++)
                 {
                     if (gf_mul(H.coefficient[i][j], gf_pow(2, k)) & (1 << l))
                     {
@@ -406,9 +425,11 @@ binarymatrix_t punct_block_matrix(binarymatrix_t exp_H, binarymatrix_t *proj_mat
         int i = 0;
     for (i = 0; i < exp_H.row_numbers; i++)
         {
-            for (int k = 0; k < EXT_MU; k++)
+            int k = 0;
+    for (k = 0; k < EXT_MU; k++)
             {
-                for (int l = 0; l < EXTENSION_DEGREE; l++)
+                int l = 0;
+    for (l = 0; l < EXTENSION_DEGREE; l++)
                 {
                     bit ^= mat_coeff(exp_H, i, l) & mat_coeff(proj_mats[r], l, k);
                 }
@@ -434,7 +455,8 @@ gf_t *multiplier_dual(gf_t *S, gf_t *L)
     int i = 0;
     for (i = 0; i < gf_ord(); i++)
     {
-        for (int j = 0; j < gf_ord(); j++)
+        int j = 0;
+    for (j = 0; j < gf_ord(); j++)
         {
             if (i == j)
             {
@@ -460,7 +482,8 @@ binarymatrix_t random_invertible(int ordre)
     int i = 0;
     for (i = 0; i < ordre; i++)
     {
-        for (int j = 0; j < ordre; j++)
+        int j = 0;
+    for (j = 0; j < ordre; j++)
         {
             if (i > j)
             {
@@ -492,7 +515,8 @@ binarymatrix_t random_max_rank_matrix(int mu)
     int i = 0;
     for (i = 0; i < EXTENSION_DEGREE; i++)
     {
-        for (int j = 0; j < mu; j++)
+        int j = 0;
+    for (j = 0; j < mu; j++)
         {
             if (mat_coeff(B, i, j))
             {
@@ -525,9 +549,11 @@ binarymatrix_t *random_max_rank_matrix_list(int size, int mu)
     for (i = 0; i < size; i++)
     {
         proj_mats[i] = init_binary_matrix(EXTENSION_DEGREE, dimension);
-        for (int j = 0; j < dimension; j++)
+        int j = 0;
+    for (j = 0; j < dimension; j++)
         {
-            for (int k = 0; k < EXTENSION_DEGREE; k++)
+            int k = 0;
+    for (k = 0; k < EXTENSION_DEGREE; k++)
             {
 
                 if (gf_mul((random_bytes[j] % gf_ord() + 1), gf_pow(2, k)) & (1 << k))

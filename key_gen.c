@@ -20,7 +20,8 @@ void generate_random_vector(int m, gf_t *vect)
     {
         U[i] = i;
     }
-    for (int j = 0; j < gf_card(); j++)
+    int j = 0;
+    for (j = 0; j < gf_card(); j++)
     {
         v = ((gf_t *)random_bytes)[j] % (j + 1);
         tmp = U[j];
