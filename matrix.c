@@ -172,43 +172,42 @@ void product_binary_matrix(binarymatrix_t A, binarymatrix_t B, binarymatrix_t pr
     }
 }
 
-int gauss_elim(binarymatrix_t A)
+int gauss_elim(binarymatrix_t M)
 {
-    int i, j, k, l;
-    for (j = A.column_numbers - A.row_numbers, k = 0; (k < A.row_numbers) && (j < A.column_numbers); ++j)
-    {
-        for (i = k; i < A.row_numbers; ++i)
-        {
-            if (mat_coeff(A, i, j))
-            {
-                mat_swap_rows(A, i, k);
-                break;
-            }
-        }
-        // printf("i= %d \n", i);
-        if (i < A.row_numbers)
-        {
-            for (l = 0; l < k; ++l)
-            {
-                if (mat_coeff(A, l, j))
-                {
-                    matrix_row_xor(A, l, k);
-                }
-            }
-            for (l = i + 1; l < A.row_numbers; ++l)
-            {
-                if (mat_coeff(A, l, j))
-                {
-                    matrix_row_xor(A, l, k);
-                }
-            }
-            printf("gauss : j = %d et k = %d \n", j, k);
-        display_binary_matrix(A);
-            ++k;
-        }
-    }
-    // display_binary_matrix(A);
-    return k;
+	int i, j, k, l;
+	printf("entering gaussElim\n");
+	//int rwdcnt = 1 + ( - 1) / __WORDSIZE;
+
+	for (j = M.column_numbers - M.row_numbers, k = 0; (k < M.row_numbers) && (j < M.column_numbers); ++j)
+	//for (j = 0, k = 0; (k < M.rown) && (j < M.rown); ++j)
+	{
+		// we search for a pivot
+		for (i = k; i < M.row_numbers; ++i)
+		{
+			if (mat_coeff(M, i, j))
+			{
+				swaprows(M, i, k);
+
+				break;
+			}
+		}
+
+		if (i < M.row_numbers)
+		{ // found
+			for (l = 0; l < k; ++l)
+				if (mat_coeff(M, l, j))
+					mat_rowxor(M, l, k);
+			for (l = i + 1; l < M.row_numbers; ++l)
+				if (mat_coeff(M, l, j))
+					mat_rowxor(M, l, k);
+			++k;
+		}
+		else
+		{ // not found
+		}
+	}
+
+	return k;
 }
 
 void no_binary_reed_solomon_secret_check_matrix(matrix_t H, gf_t *S, gf_t *L)

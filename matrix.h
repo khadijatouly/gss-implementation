@@ -47,7 +47,7 @@ void transpose_binary_matrix(binarymatrix_t A, binarymatrix_t transpose_A);
 void transpose_no_binary_matrix(matrix_t A, matrix_t transpse_A);
 
 void product_binary_matrix(binarymatrix_t A, binarymatrix_t B, binarymatrix_t product_AB);
-int gauss_elim(binarymatrix_t A);
+int gauss_elim(binarymatrix_t M);
 
 void no_binary_reed_solomon_secret_check_matrix(matrix_t H, gf_t *S, gf_t *L);
 void binary_reed_solomon_secret_check_matrix(binarymatrix_t H, gf_t *S, gf_t *L);
