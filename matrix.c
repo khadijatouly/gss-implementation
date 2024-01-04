@@ -218,7 +218,7 @@ void no_binary_reed_solomon_secret_check_matrix(matrix_t H, gf_t *S, gf_t *L)
     {
         H.coefficient[0][i] = L[i];
     }
-    int i = 1;
+    
     for (i = 1; i < H.row_numbers; i++)
     {
         int j = 0;
@@ -262,7 +262,7 @@ void no_binary_reed_solomon_secret_check_matrix(matrix_t H, gf_t *S, gf_t *L)
  */
 void G_mat_pub(binarymatrix_t A, binarymatrix_t H_syst)
 {
-    int i = 0;
+    int i = 0,k=0;
     for (i = 0; i < A.row_numbers; i++)
     {
         int j = 0;
@@ -271,7 +271,7 @@ void G_mat_pub(binarymatrix_t A, binarymatrix_t H_syst)
             mat_set_coeff_to_one(A, j, j);
         }
 
-        for (int k = A.row_numbers; k < A.column_numbers; k++)
+        for (k = A.row_numbers; k < A.column_numbers; k++)
         {
             if (mat_coeff(H_syst, k - A.row_numbers, i))
             {
@@ -418,11 +418,12 @@ void copy_column(binarymatrix_t from_exp_mat, int from_idex, binarymatrix_t dest
 binarymatrix_t punct_block_matrix(binarymatrix_t exp_H, binarymatrix_t *proj_mats)
 {
     gf_t bit = 0;
+    int j=0,r=0; int i = 0;
     binarymatrix_t punct_matrix;
     punct_matrix = init_binary_matrix(exp_H.row_numbers, (exp_H.column_numbers / EXTENSION_DEGREE) * EXT_MU);
-    for (int j = 0, r = 0; j < exp_H.column_numbers && (r < exp_H.column_numbers / EXTENSION_DEGREE); j += EXTENSION_DEGREE, r++)
+    for (j = 0, r = 0; j < exp_H.column_numbers && (r < exp_H.column_numbers / EXTENSION_DEGREE); j += EXTENSION_DEGREE, r++)
     {
-        int i = 0;
+        
     for (i = 0; i < exp_H.row_numbers; i++)
         {
             int k = 0;
