@@ -71,7 +71,6 @@ void rs_support(gf_t *S, gf_t *L)
     V= (gf_t *)calloc(gf_card(), sizeof(gf_t));
     init_random_element(U, 1);
     init_random_element(V,0);
-    Remove_From_U(gf_zero(), V);
     for ( i = 0; i < code_length; i++)
     {
         S[i]=U[i];
