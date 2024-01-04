@@ -38,7 +38,7 @@ void init_random_element(gf_t *U, int iszeroPermit) {
 	unsigned char *random_bytes = 0;
 	random_bytes = malloc(gf_ord() * sizeof(gf_t));
 	randombytes(random_bytes, gf_ord() * sizeof(gf_t));
-    j=(iszeroPermit)?0:1;
+    j=(iszeroPermit==1)?0:1;
 	for (i = j; i <= gf_ord(); i++) {
 		U[i] = i;
 	}
@@ -54,15 +54,7 @@ void init_random_element(gf_t *U, int iszeroPermit) {
 	free(random_bytes);
 }
 
-void Remove_From_U(gf_t elt, gf_t *U) {
-	int k;
-	for (k = 0; k <= gf_ord(); k++) {
-		if (U[k] == elt) {
-			U[k] = 0;
-			break;
-		}
-	}
-}
+
 
 void rs_support(gf_t *S, gf_t *L)
 {   gf_t *U, *V;
@@ -76,8 +68,8 @@ void rs_support(gf_t *S, gf_t *L)
         S[i]=U[i];
         L[i]=V[i];
     }
-    display_no_binary_vect(S,code_length);
-	display_no_binary_vect(L,code_length);
+    display_no_binary_vect(U,code_length);
+	display_no_binary_vect(V,code_length);
     
 }
 
