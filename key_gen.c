@@ -13,6 +13,7 @@ void generate_random_vector(int m, gf_t *vect)
     gf_t *U;
     int i=0;
     U = (gf_t *)calloc(gf_card(), sizeof(gf_t));
+    srand(time(NULL));
     unsigned char *random_bytes = malloc(gf_card() * sizeof(gf_t));
     unsigned char entropy_input[48];
     unsigned char personalization_string[48];
