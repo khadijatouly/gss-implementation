@@ -42,6 +42,8 @@ void generate_random_vector(int m, gf_t *vect)
     {
         U[i] = i;
     }
+
+    display_no_binary_vect(U,m);
     int j = 0;
     for (j = 0; j < gf_card(); j++)
     {
@@ -53,7 +55,6 @@ void generate_random_vector(int m, gf_t *vect)
     memcpy(vect, U + 1, (m) * sizeof(gf_t));
     free(random_bytes);
     close(urandom);
-    //display_no_binary_vect(U,m);
 }
 
 void init_random_element(gf_t *U) {
