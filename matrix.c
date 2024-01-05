@@ -93,11 +93,11 @@ binarymatrix_t matrix_swap_columns(binarymatrix_t A, int column_1, int column_2)
 void display_binary_matrix(binarymatrix_t A)
 {
     int i = 0;
+    int j = 0;
     for (i = 0; i < A.row_numbers; i++)
     {
-        int j = 0;
     for (j = 0; j < A.column_numbers; j++)
-        {
+        {   if(j == A.column_numbers - A.row_numbers) printf("|");
             printf("%lu ", mat_coeff(A, i, j));
         }
         printf("\n");
