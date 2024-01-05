@@ -88,13 +88,15 @@ int key_pair_gen()
 {
     //int return_value = 1;
     gf_t *S, *L;
+	int return_value = 1;
     init_gf(EXTENSION_DEGREE);
     //int n = code_length;
     //int k = n/2;
     matrix_t H = init_matrix(t, code_length);
     binarymatrix_t punct_mat;
-    //while (return_value != punct_mat.row_numbers)
-    //{
+    while (return_value != punct_mat.row_numbers)
+    {
+
     S = (gf_t *)calloc(code_length, sizeof(gf_t));
     L = (gf_t *)calloc(code_length, sizeof(gf_t));
     rs_support(S, L);
@@ -112,11 +114,19 @@ int key_pair_gen()
     //printf("Ligne=%d\n",punct_mat.row_numbers);
     
     display_binary_matrix(punct_mat);
-    gauss_elim(punct_mat);
+    return_value=gauss_elim(punct_mat);
     display_binary_matrix(punct_mat);
-    //}
+    
+
+    if (return_value != punct_mat.row_numbers)
+		{
+			binary_matrix_free(punct_mat);
+		}
     //binary_matrix_free(punct_mat);
     //binary_matrix_free(exp_H);
     //no_binary_matrix_free(H);
+    
+    }
+    
     return 1;
 }
