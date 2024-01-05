@@ -163,6 +163,24 @@ int Test_disjoint(gf_t *L, int n)
 	}
 	return 0;
 }
+
+int disjoint_test(gf_t *u, gf_t *v)
+{
+	int i, j;
+	for (i = 0; i < (order); i++)
+	{
+		for (j = 0; j < code_length; j++)
+		{
+			if (u[i] == v[j])
+			{
+				return -1;
+			}
+		}
+	}
+	return 0;
+}
+
+
 int key_pair_gen()
 {
     //int return_value = 1;
