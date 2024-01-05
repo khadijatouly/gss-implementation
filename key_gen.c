@@ -3,7 +3,8 @@
 #include <time.h>
 #include <string.h>
 #include <fcntl.h>
-#include <unistd.h>
+#include <unistd.h>          
+#include <assert.h>
 
 #include "key_gen.h"
 #include "gf_operation.h"
