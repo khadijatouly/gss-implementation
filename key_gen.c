@@ -119,7 +119,6 @@ int key_pair_gen()
     {
 
     S = (gf_t *)calloc(code_length, sizeof(gf_t));
-    z = (gf_t *)calloc(order, sizeof(gf_t));
     L = (gf_t *)calloc(code_length, sizeof(gf_t));
     rs_support(S, L);
     no_binary_reed_solomon_secret_check_matrix(H, S, L);
