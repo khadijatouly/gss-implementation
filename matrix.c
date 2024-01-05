@@ -92,7 +92,7 @@ binarymatrix_t matrix_swap_columns(binarymatrix_t A, int column_1, int column_2)
 
 void display_binary_matrix(binarymatrix_t A)
 {
-    int i = 0;
+    int i = 0; 
     int j = 0;
     for (i = 0; i < A.row_numbers; i++)
     {
