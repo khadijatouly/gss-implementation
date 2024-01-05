@@ -457,7 +457,8 @@ binarymatrix_t punct_block_matrix_reduit(binarymatrix_t exp_H, binarymatrix_t *p
     {
         for (j = 0; j < punct_matrix.column_numbers; j++)
         {
-            for (k = (j / EXT_MU) * EXTENSION_DEGREE; k < (j / EXT_MU) * EXTENSION_DEGREE + EXTENSION_DEGREE; i++)
+            int depart=(j / EXT_MU) * EXTENSION_DEGREE;
+            for (k = depart; k < depart + EXTENSION_DEGREE; k++)
             {
                 bit ^= mat_coeff(exp_H, i, k) & mat_coeff(proj_mats[j / EXT_MU], k % EXTENSION_DEGREE, j % EXT_MU);
             }
