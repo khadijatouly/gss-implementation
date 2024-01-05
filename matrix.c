@@ -418,6 +418,12 @@ void copy_column(binarymatrix_t from_exp_mat, int from_idex, binarymatrix_t dest
  */
 binarymatrix_t punct_block_matrix(binarymatrix_t exp_H, binarymatrix_t *proj_mats)
 {
+    if (((exp_H.column_numbers/EXTENSION_DEGREE) *EXT_MU) < exp_H.row_numbers)
+    {
+        fprintf(stderr, "La longueur du code doit etre plus grand aue la dimension \n");
+        exit(0);
+    }
+    
     gf_t bit = 0;
     int j = 0, r = 0;
     int i = 0;
