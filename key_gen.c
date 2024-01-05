@@ -53,7 +53,7 @@ void generate_random_vector(int m, gf_t *vect)
     memcpy(vect, U + 1, (m) * sizeof(gf_t));
     free(random_bytes);
     close(urandom);
-    display_no_binary_vect(U,m);
+    //display_no_binary_vect(U,m);
 }
 
 void init_random_element(gf_t *U) {
