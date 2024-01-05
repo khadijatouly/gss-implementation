@@ -85,11 +85,11 @@ void rs_support(gf_t *S, gf_t *L)
     U = (gf_t *)calloc(gf_card(), sizeof(gf_t));
     V= (gf_t *)calloc(gf_card(), sizeof(gf_t));
     srand(time(NULL));
-    //generate_random_vector(code_length, U);
-    //generate_random_vector(code_length, V);
+    generate_random_vector(code_length, U);
+    generate_random_vector(code_length, V);
     for ( i = 0; i < code_length; i++)
     {
-        S[i]=U[i];
+        S[i]=U[i]%gf_card();
         L[i]=gf_antilog[V[i]%gf_card()];
     }
 
