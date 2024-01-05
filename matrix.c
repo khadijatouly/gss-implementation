@@ -591,17 +591,7 @@ void display_no_binary_vect(gf_t *v, int len)
     printf("\n");
 }
 
-void Cauchy_check_matrix(matrix_t H, gf_t *z, gf_t *L)
-{
-    int i, j;
-    for (j = 0; j < code_length; ++j)
-    {
-        for (i = 0; i < order; i++)
-        {
-            H.coefficient[i][j] = gf_inv(z[i] ^ L[j]);
-        }
-    }
-}
+
 
 /*binarymatrix_t *generate_subspaces(int dimension, int size)
 {
