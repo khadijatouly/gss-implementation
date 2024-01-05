@@ -22,9 +22,9 @@ void generate_random_vector(int m, gf_t *vect)
 
     if (urandom == -1) {
         perror("Erreur lors de l'ouverture de /dev/urandom");
-        return 1;
+        return ;
     }
-    ssize_t bytesRead = read(urandom, buffer, sizeof(buffer));
+    read(urandom, buffer, sizeof(buffer));
 
 
     unsigned char *random_bytes = malloc(gf_card() * sizeof(gf_t));

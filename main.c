@@ -5,10 +5,11 @@
 #include "key_gen.h"
 #include "param.h"
 
-void main()
+int main(void)
 {
     /* code */
     key_pair_gen();
     
     // mingw32-make.exe()
+    return 0;
 }
