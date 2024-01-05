@@ -2,7 +2,7 @@
 #define PARAM_H
 
 #define BITS_PER_LONG (8 * sizeof(unsigned long))
-#define EXTENSION_DEGREE 5
+#define EXTENSION_DEGREE 4
 #define t 3
 #define code_length 28
 #define mt (t*EXTENSION_DEGREE)
