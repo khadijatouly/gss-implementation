@@ -214,7 +214,7 @@ int key_pair_gen()
     //display_binary_matrix(exp_H);
     binarymatrix_t *proj_mats = random_max_rank_matrix_list(code_length, EXT_MU);
     punct_mat = init_binary_matrix(H.row_numbers * EXTENSION_DEGREE, H.column_numbers * EXT_MU);
-    punct_mat = punct_block_matrix(exp_H, proj_mats);
+    punct_mat = punct_block_matrix_reduit(exp_H, proj_mats);
     //printf("Colonne=%d\n",punct_mat.column_numbers);
     //printf("Ligne=%d\n",punct_mat.row_numbers);
     

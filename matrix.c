@@ -46,17 +46,16 @@ matrix_t init_matrix(int row_numbers, int column_numbers)
     }
     return A;
 }
-  
+
 void binary_matrix_free(binarymatrix_t A)
 {
     int i = 0;
-    for (i = 0; i < A.row_numbers; i++ )
+    for (i = 0; i < A.row_numbers; i++)
     {
         free(A.element[i]);
     }
     free(A.element);
 }
-
 
 void no_binary_matrix_free(matrix_t A)
 {
@@ -93,12 +92,14 @@ binarymatrix_t matrix_swap_columns(binarymatrix_t A, int column_1, int column_2)
 
 void display_binary_matrix(binarymatrix_t A)
 {
-    int i = 0; 
+    int i = 0;
     int j = 0;
     for (i = 0; i < A.row_numbers; i++)
     {
-    for (j = 0; j < A.column_numbers; j++)
-        {   if(j == A.column_numbers - A.row_numbers) printf("|");
+        for (j = 0; j < A.column_numbers; j++)
+        {
+            if (j == A.column_numbers - A.row_numbers)
+                printf("|");
             printf("%lu ", mat_coeff(A, i, j));
         }
         printf("\n");
@@ -112,7 +113,7 @@ void display_no_binary_matrix(matrix_t A)
     for (i = 0; i < A.row_numbers; i++)
     {
         int j = 0;
-    for (j = 0; j < A.column_numbers; j++)
+        for (j = 0; j < A.column_numbers; j++)
         {
             printf("%d ", A.coefficient[i][j]);
         }
@@ -127,7 +128,7 @@ void transpose_binary_matrix(binarymatrix_t A, binarymatrix_t transpose_A)
     for (i = 0; i < A.row_numbers; i++)
     {
         int j = 0;
-    for (j = 0; j < A.column_numbers; j++)
+        for (j = 0; j < A.column_numbers; j++)
         {
             if (mat_coeff(A, i, j))
             {
@@ -143,7 +144,7 @@ void transpose_no_binary_matrix(matrix_t A, matrix_t transpose_A)
     for (i = 0; i < A.row_numbers; i++)
     {
         int j = 0;
-    for (j = 0; j < A.column_numbers; j++)
+        for (j = 0; j < A.column_numbers; j++)
         {
             transpose_A.coefficient[j][i] = A.coefficient[i][j];
         }
@@ -157,10 +158,10 @@ void product_binary_matrix(binarymatrix_t A, binarymatrix_t B, binarymatrix_t pr
     for (i = 0; i < A.row_numbers; i++)
     {
         int j = 0;
-    for (j = 0; j < B.column_numbers; j++)
+        for (j = 0; j < B.column_numbers; j++)
         {
             int k = 0;
-    for (k = 0; k < B.row_numbers; k++)
+            for (k = 0; k < B.row_numbers; k++)
             {
                 bit ^= mat_coeff(A, i, k) & mat_coeff(B, k, j);
             }
@@ -173,44 +174,42 @@ void product_binary_matrix(binarymatrix_t A, binarymatrix_t B, binarymatrix_t pr
     }
 }
 
-
-
 int gauss_elim(binarymatrix_t M)
 {
-	int i, j, k, l;
-	printf("entering gaussElim\n");
-	//int rwdcnt = 1 + ( - 1) / __WORDSIZE;
+    int i, j, k, l;
+    printf("entering gaussElim\n");
+    // int rwdcnt = 1 + ( - 1) / __WORDSIZE;
 
-	for (j = M.column_numbers - M.row_numbers, k = 0; (k < M.row_numbers) && (j < M.column_numbers); ++j)
-	//for (j = 0, k = 0; (k < M.rown) && (j < M.rown); ++j)
-	{
-		// we search for a pivot
-		for (i = k; i < M.row_numbers; ++i)
-		{
-			if (mat_coeff(M, i, j))
-			{
-				mat_swap_rows(M, i, k);
+    for (j = M.column_numbers - M.row_numbers, k = 0; (k < M.row_numbers) && (j < M.column_numbers); ++j)
+    // for (j = 0, k = 0; (k < M.rown) && (j < M.rown); ++j)
+    {
+        // we search for a pivot
+        for (i = k; i < M.row_numbers; ++i)
+        {
+            if (mat_coeff(M, i, j))
+            {
+                mat_swap_rows(M, i, k);
 
-				break;
-			}
-		}
+                break;
+            }
+        }
 
-		if (i < M.row_numbers)
-		{ // found
-			for (l = 0; l < k; ++l)
-				if (mat_coeff(M, l, j))
-					matrix_row_xor(M, l, k);
-			for (l = i + 1; l < M.row_numbers; ++l)
-				if (mat_coeff(M, l, j))
-					matrix_row_xor(M, l, k);
-			++k;
-		}
-		else
-		{ // not found
-		}
-	}
+        if (i < M.row_numbers)
+        { // found
+            for (l = 0; l < k; ++l)
+                if (mat_coeff(M, l, j))
+                    matrix_row_xor(M, l, k);
+            for (l = i + 1; l < M.row_numbers; ++l)
+                if (mat_coeff(M, l, j))
+                    matrix_row_xor(M, l, k);
+            ++k;
+        }
+        else
+        { // not found
+        }
+    }
 
-	return k;
+    return k;
 }
 
 void no_binary_reed_solomon_secret_check_matrix(matrix_t H, gf_t *S, gf_t *L)
@@ -220,11 +219,11 @@ void no_binary_reed_solomon_secret_check_matrix(matrix_t H, gf_t *S, gf_t *L)
     {
         H.coefficient[0][i] = L[i];
     }
-    
+
     for (i = 1; i < H.row_numbers; i++)
     {
         int j = 0;
-    for (j = 0; j < H.column_numbers; j++)
+        for (j = 0; j < H.column_numbers; j++)
         {
             H.coefficient[i][j] = gf_mul(H.coefficient[i - 1][j], S[j]);
         }
@@ -264,11 +263,11 @@ void no_binary_reed_solomon_secret_check_matrix(matrix_t H, gf_t *S, gf_t *L)
  */
 void G_mat_pub(binarymatrix_t A, binarymatrix_t H_syst)
 {
-    int i = 0,k=0;
+    int i = 0, k = 0;
     for (i = 0; i < A.row_numbers; i++)
     {
         int j = 0;
-    for (j = 0; j < A.row_numbers; j++)
+        for (j = 0; j < A.row_numbers; j++)
         {
             mat_set_coeff_to_one(A, j, j);
         }
@@ -323,7 +322,7 @@ void product_vector_matrix(unsigned long *result, unsigned char *u, binarymatrix
         if ((u[i / 8] >> (i % 8)) & 1)
         {
             int j = 0;
-    for (j = 0; j < A.rwdcnt; j++)
+            for (j = 0; j < A.rwdcnt; j++)
             {
                 result[j] ^= A.element[i][j];
             }
@@ -338,7 +337,7 @@ void expansion(gf_t *v, int len, binarymatrix_t A)
     for (i = 0; i < len; i++)
     {
         int j = 0;
-    for (j = 0; j < EXTENSION_DEGREE; j++)
+        for (j = 0; j < EXTENSION_DEGREE; j++)
         {
             if (v[i] & (1 << j))
             {
@@ -357,13 +356,13 @@ void expansion_gen_mat(matrix_t G, binarymatrix_t exp_G)
     for (i = 0; i < G.row_numbers; i++)
     {
         int j = 0;
-    for (j = 0; j < EXTENSION_DEGREE; j++)
+        for (j = 0; j < EXTENSION_DEGREE; j++)
         {
             int k = 0;
-    for (k = 0; k < G.column_numbers; k++)
+            for (k = 0; k < G.column_numbers; k++)
             {
                 int l = 0;
-    for (l = 0; l < EXTENSION_DEGREE; l++)
+                for (l = 0; l < EXTENSION_DEGREE; l++)
                 {
                     if (gf_mul(G.coefficient[i][k], gf_pow(2, j)) & (1 << l))
                     {
@@ -384,13 +383,13 @@ void expansion_check_mat(matrix_t H, binarymatrix_t exp_H)
     for (j = 0; j < H.column_numbers; j++)
     {
         int k = 0;
-    for (k = 0; k < EXTENSION_DEGREE; k++)
+        for (k = 0; k < EXTENSION_DEGREE; k++)
         {
             int i = 0;
-    for (i = 0; i < H.row_numbers; i++)
+            for (i = 0; i < H.row_numbers; i++)
             {
                 int l = 0;
-    for (l = 0; l < EXTENSION_DEGREE; l++)
+                for (l = 0; l < EXTENSION_DEGREE; l++)
                 {
                     if (gf_mul(H.coefficient[i][j], gf_pow(2, k)) & (1 << l))
                     {
@@ -420,19 +419,20 @@ void copy_column(binarymatrix_t from_exp_mat, int from_idex, binarymatrix_t dest
 binarymatrix_t punct_block_matrix(binarymatrix_t exp_H, binarymatrix_t *proj_mats)
 {
     gf_t bit = 0;
-    int j=0,r=0; int i = 0;
+    int j = 0, r = 0;
+    int i = 0;
     binarymatrix_t punct_matrix;
     punct_matrix = init_binary_matrix(exp_H.row_numbers, (exp_H.column_numbers / EXTENSION_DEGREE) * EXT_MU);
     for (j = 0, r = 0; j < exp_H.column_numbers && (r < exp_H.column_numbers / EXTENSION_DEGREE); j += EXTENSION_DEGREE, r++)
     {
-        
-    for (i = 0; i < exp_H.row_numbers; i++)
+
+        for (i = 0; i < exp_H.row_numbers; i++)
         {
             int k = 0;
-    for (k = 0; k < EXT_MU; k++)
+            for (k = 0; k < EXT_MU; k++)
             {
                 int l = 0;
-    for (l = 0; l < EXTENSION_DEGREE; l++)
+                for (l = 0; l < EXTENSION_DEGREE; l++)
                 {
                     bit ^= mat_coeff(exp_H, i, l) & mat_coeff(proj_mats[r], l, k);
                 }
@@ -447,6 +447,30 @@ binarymatrix_t punct_block_matrix(binarymatrix_t exp_H, binarymatrix_t *proj_mat
     return punct_matrix;
 }
 
+binarymatrix_t punct_block_matrix_reduit(binarymatrix_t exp_H, binarymatrix_t *proj_mats)
+{
+    int i = 0, j = 0, k = 0;
+    gf_t bit = 0;
+    binarymatrix_t punct_matrix;
+    punct_matrix = init_binary_matrix(exp_H.row_numbers, (exp_H.column_numbers / EXTENSION_DEGREE) * EXT_MU);
+    for (i = 0; i < punct_matrix.row_numbers; i++)
+    {
+        for (j = 0; j < punct_matrix.column_numbers; j++)
+        {
+            for (k = (j / EXT_MU) * EXTENSION_DEGREE; k < (j / EXT_MU) * EXTENSION_DEGREE + EXTENSION_DEGREE; i++)
+            {
+                bit ^= mat_coeff(exp_H, i, k) & mat_coeff(proj_mats[j / EXT_MU], k % EXTENSION_DEGREE, j % EXT_MU);
+            }
+            if (bit)
+            {
+                mat_set_coeff_to_one(punct_matrix, i, j);
+            }
+            bit = 0;
+        }
+    }
+
+    return punct_matrix;
+}
 /**
  * fonction qui permet de calculer le dual du multiplieur d'un code de reed solomon donne
  */
@@ -459,7 +483,7 @@ gf_t *multiplier_dual(gf_t *S, gf_t *L)
     for (i = 0; i < gf_ord(); i++)
     {
         int j = 0;
-    for (j = 0; j < gf_ord(); j++)
+        for (j = 0; j < gf_ord(); j++)
         {
             if (i == j)
             {
@@ -473,37 +497,36 @@ gf_t *multiplier_dual(gf_t *S, gf_t *L)
     return L_dual;
 }
 
-
 binarymatrix_t random_invertible(int ordre)
 {
     binarymatrix_t A, U, L;
     U = init_binary_matrix_id(ordre);
     L = init_binary_matrix_id(ordre);
     A = init_binary_matrix_id(ordre);
-    unsigned char *random_bytes = malloc((ordre-1)/8 +1);
-    randombytes(random_bytes, (ordre-1)/8 +1);
+    unsigned char *random_bytes = malloc((ordre - 1) / 8 + 1);
+    randombytes(random_bytes, (ordre - 1) / 8 + 1);
     int i = 0;
     for (i = 0; i < ordre; i++)
     {
         int j = 0;
-    for (j = 0; j < ordre; j++)
+        for (j = 0; j < ordre; j++)
         {
             if (i > j)
             {
-                if ((random_bytes[j/8] >> (j%8)) & 1)
+                if ((random_bytes[j / 8] >> (j % 8)) & 1)
                 {
                     mat_set_coeff_to_one(L, i, j);
                 }
             }
             else if (i < j)
             {
-                if ((random_bytes[j/8] >> (j%8)) & 1)
+                if ((random_bytes[j / 8] >> (j % 8)) & 1)
                 {
                     mat_set_coeff_to_one(U, i, j);
                 }
             }
         }
-        randombytes(random_bytes, (ordre-1)/8 +1);
+        randombytes(random_bytes, (ordre - 1) / 8 + 1);
     }
     product_binary_matrix(L, U, A);
     free(random_bytes);
@@ -514,13 +537,13 @@ binarymatrix_t random_max_rank_matrix(int mu)
 {
     binarymatrix_t A, B;
     A = init_binary_matrix(EXTENSION_DEGREE, mu);
-    //B = random_invertible(EXTENSION_DEGREE);
+    // B = random_invertible(EXTENSION_DEGREE);
     B = init_binary_matrix_id(EXTENSION_DEGREE);
     int i = 0;
     for (i = 0; i < EXTENSION_DEGREE; i++)
     {
         int j = 0;
-    for (j = 0; j < mu; j++)
+        for (j = 0; j < mu; j++)
         {
             if (mat_coeff(B, i, j))
             {
@@ -542,42 +565,41 @@ binarymatrix_t *random_max_rank_matrix_list(int size, int mu)
     }
     return proj_mats;
 }
-void print_vect(gf_t *v, int len, char *text,float scale)
+void print_vect(gf_t *v, int len, char *text, float scale)
 {
-	int i;
-	printf("\\[\\Scale[%f]{\n",scale);
-	printf("$$%s(", text);
-	for (i = 0; i < len; i++)
-	{
-		printf("u^{%d}", gf_log[v[i]]);
-		if((i+1)!=len)printf(",");
-	}
-	printf(")$$\n");
-	printf("}\\]\n");
+    int i;
+    printf("\\[\\Scale[%f]{\n", scale);
+    printf("$$%s(", text);
+    for (i = 0; i < len; i++)
+    {
+        printf("u^{%d}", gf_log[v[i]]);
+        if ((i + 1) != len)
+            printf(",");
+    }
+    printf(")$$\n");
+    printf("}\\]\n");
 }
 void display_no_binary_vect(gf_t *v, int len)
 {
     int i = 0;
     for (i = 0; i < len; i++)
     {
-       
-            printf("%d ", v[i]);
-        
-       
+
+        printf("%d ", v[i]);
     }
     printf("\n");
 }
 
 void Cauchy_check_matrix(matrix_t H, gf_t *z, gf_t *L)
 {
-	int i, j;
-	for (j = 0; j < code_length; ++j)
-	{
-		for (i = 0; i < order; i++)
-		{
-			H.coefficient[i][j] = gf_inv(z[i] ^ L[j]);
-		}
-	}
+    int i, j;
+    for (j = 0; j < code_length; ++j)
+    {
+        for (i = 0; i < order; i++)
+        {
+            H.coefficient[i][j] = gf_inv(z[i] ^ L[j]);
+        }
+    }
 }
 
 /*binarymatrix_t *generate_subspaces(int dimension, int size)

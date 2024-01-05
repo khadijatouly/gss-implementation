@@ -75,5 +75,6 @@ binarymatrix_t *generate_subspaces(int dimension, int size);
 void print_vect(gf_t *v, int len, char *text,float scale);
 void display_no_binary_vect(gf_t *v, int len);
 void Cauchy_check_matrix(matrix_t H, gf_t *z, gf_t *L);
+binarymatrix_t punct_block_matrix_reduit(binarymatrix_t exp_H, binarymatrix_t *proj_mats);
 
 #endif
