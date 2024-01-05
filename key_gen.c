@@ -211,7 +211,7 @@ int key_pair_gen()
     printf("Ligne=%d\n",H.row_numbers);
     binarymatrix_t exp_H = init_binary_matrix(H.row_numbers * EXTENSION_DEGREE, H.column_numbers * EXTENSION_DEGREE);
     expansion_check_mat(H, exp_H);
-    //display_binary_matrix(exp_H);
+    display_binary_matrix(exp_H);
     binarymatrix_t *proj_mats = random_max_rank_matrix_list(code_length, EXT_MU);
     punct_mat = init_binary_matrix(H.row_numbers * EXTENSION_DEGREE, H.column_numbers * EXT_MU);
     punct_mat = punct_block_matrix(exp_H, proj_mats);
@@ -220,7 +220,7 @@ int key_pair_gen()
     
     //display_binary_matrix(punct_mat);
     return_value=gauss_elim(punct_mat);
-    display_binary_matrix(punct_mat);
+    //display_binary_matrix(punct_mat);
     
 
     if (return_value != punct_mat.row_numbers)
