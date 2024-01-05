@@ -50,7 +50,7 @@ matrix_t init_matrix(int row_numbers, int column_numbers)
 void binary_matrix_free(binarymatrix_t A)
 {
     int i = 0;
-    for (i = 0; i < A.row_numbers; i++)
+    for (i = 0; i < A.row_numbers; i++ )
     {
         free(A.element[i]);
     }
