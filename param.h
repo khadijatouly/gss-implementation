@@ -8,7 +8,7 @@
 #define mt (t*EXTENSION_DEGREE)
 #define code_dimension (code_length-mt)
 #define EXT_MU 4
-#define order t
+#define order t 
 #define ss_length 64
 
 #endif
