@@ -83,7 +83,7 @@ void init_random_element(gf_t *U) {
 
 
 void rs_support(gf_t *S, gf_t *L)
-{   /*
+{   
     gf_t *U, *V;
     int i=0; 
     U = (gf_t *)calloc(gf_card(), sizeof(gf_t));
@@ -97,11 +97,7 @@ void rs_support(gf_t *S, gf_t *L)
         L[i]=gf_antilog[V[i]%gf_card()];
     }
 
-    display_no_binary_vect(L,code_length);*/
-    gf_t *L, *z;
-    z = (gf_t *)calloc(order, sizeof(gf_t));
-	L = (gf_t *)calloc(code_length, sizeof(gf_t));
-    cauchy_support_centro(z, L, 1);
+    display_no_binary_vect(L,code_length);
     
 }
 
