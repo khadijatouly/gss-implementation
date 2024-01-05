@@ -136,7 +136,7 @@ int key_pair_gen()
     
     //display_binary_matrix(punct_mat);
     return_value=gauss_elim(punct_mat);
-    //display_binary_matrix(punct_mat);
+    display_binary_matrix(punct_mat);
     
 
     if (return_value != punct_mat.row_numbers)
