@@ -457,7 +457,7 @@ binarymatrix_t punct_block_matrix_reduit(binarymatrix_t exp_H, binarymatrix_t *p
     {
         for (j = 0; j < punct_matrix.column_numbers; j++)
         {
-            int depart=(j / EXT_MU) * EXTENSION_DEGREE;
+            int depart = (j / EXT_MU) * EXTENSION_DEGREE;
             for (k = depart; k < depart + EXTENSION_DEGREE; k++)
             {
                 bit ^= mat_coeff(exp_H, i, k) & mat_coeff(proj_mats[j / EXT_MU], k % EXTENSION_DEGREE, j % EXT_MU);
@@ -538,8 +538,8 @@ binarymatrix_t random_max_rank_matrix(int mu)
 {
     binarymatrix_t A, B;
     A = init_binary_matrix(EXTENSION_DEGREE, mu);
-    // B = random_invertible(EXTENSION_DEGREE);
-    B = init_binary_matrix_id(EXTENSION_DEGREE);
+    B = random_invertible(EXTENSION_DEGREE);
+    // B = init_binary_matrix_id(EXTENSION_DEGREE);
     int i = 0;
     for (i = 0; i < EXTENSION_DEGREE; i++)
     {
@@ -590,8 +590,6 @@ void display_no_binary_vect(gf_t *v, int len)
     }
     printf("\n");
 }
-
-
 
 /*binarymatrix_t *generate_subspaces(int dimension, int size)
 {
