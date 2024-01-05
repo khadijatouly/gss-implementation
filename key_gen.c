@@ -152,6 +152,21 @@ void Remove_From_U(gf_t elt, gf_t *U)
 	}
 }
 
+int Test_disjoint(gf_t *L, int n)
+{
+	int i, j;
+	for (i = 0; i < n; i++)
+	{
+		for (j = i + 1; j < n; j++)
+		{
+			if (L[i] == L[j])
+			{
+				return -1;
+			}
+		}
+	}
+	return 0;
+}
 int key_pair_gen()
 {
     //int return_value = 1;
