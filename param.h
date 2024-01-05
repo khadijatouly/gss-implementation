@@ -7,7 +7,7 @@
 #define code_length 28
 #define mt (t*EXTENSION_DEGREE)
 #define code_dimension (code_length-mt)
-#define EXT_MU 3
+#define EXT_MU 1
 #define ss_length 64
 
 #endif
