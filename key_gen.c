@@ -89,7 +89,7 @@ void rs_support(gf_t *S, gf_t *L)
     generate_random_vector(code_length, V);
     for ( i = 0; i < code_length; i++)
     {
-        S[i]=U[i]%gf_card();
+        S[i]=U[i];
         L[i]=gf_antilog[V[i]%gf_card()];
     }
 
