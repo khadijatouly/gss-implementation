@@ -139,6 +139,19 @@ void cauchy_support_centro(gf_t *z, gf_t *L, gf_t alpha)
 	} while ((test_u != 0) || (test_v != 0) || (test_u_inter_v != 0));
 }
 
+void Remove_From_U(gf_t elt, gf_t *U)
+{
+	int k;
+	for (k = 0; k <= gf_ord(); k++)
+	{
+		if (U[k] == elt)
+		{
+			U[k] = 0;
+			break;
+		}
+	}
+}
+
 int key_pair_gen()
 {
     //int return_value = 1;
