@@ -46,7 +46,7 @@ matrix_t init_matrix(int row_numbers, int column_numbers)
     }
     return A;
 }
-
+  
 void binary_matrix_free(binarymatrix_t A)
 {
     int i = 0;
@@ -56,6 +56,7 @@ void binary_matrix_free(binarymatrix_t A)
     }
     free(A.element);
 }
+
 
 void no_binary_matrix_free(matrix_t A)
 {
