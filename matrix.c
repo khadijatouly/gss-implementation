@@ -514,7 +514,8 @@ binarymatrix_t random_max_rank_matrix(int mu)
 {
     binarymatrix_t A, B;
     A = init_binary_matrix(EXTENSION_DEGREE, mu);
-    B = random_invertible(EXTENSION_DEGREE);
+    //B = random_invertible(EXTENSION_DEGREE);
+    B = init_binary_matrix_id(EXTENSION_DEGREE);
     int i = 0;
     for (i = 0; i < EXTENSION_DEGREE; i++)
     {
