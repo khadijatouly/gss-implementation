@@ -41,10 +41,8 @@ void generate_random_vector(int m, gf_t *vect)
     for (i = 0; i < gf_card(); i++)
     {
         U[i] = i;
-         printf("%d ", U[i]);
     }
-    printf("finU \n");
-    //display_no_binary_vect(U,m);
+    
     int j = 0;
     for (j = 0; j < gf_card(); j++)
     {
@@ -54,6 +52,7 @@ void generate_random_vector(int m, gf_t *vect)
         U[v + 1] = tmp;
     }
     memcpy(vect, U + 1, (m) * sizeof(gf_t));
+    display_no_binary_vect(vect,m);
     free(random_bytes);
     close(urandom);
 }
@@ -103,6 +102,8 @@ void rs_support(gf_t *S, gf_t *L)
 int key_pair_gen()
 {
     //int return_value = 1;
+    assert( code_length <= gf_card() );
+    assert( mt <= code_length );
     gf_t *S, *L;
 	int return_value = 1;
     init_gf(EXTENSION_DEGREE);
