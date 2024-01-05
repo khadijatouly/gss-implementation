@@ -206,8 +206,8 @@ int key_pair_gen()
 	//display_no_binary_vect(L,code_length);
    // no_binary_reed_solomon_secret_check_matrix(H, S, L);
     Cauchy_check_matrix(H, z, L);
-    //display_no_binary_matrix(H);
-    printf("Colonne=%d\n",H.column_numbers);
+    display_no_binary_matrix(H);
+    /*printf("Colonne=%d\n",H.column_numbers);
     printf("Ligne=%d\n",H.row_numbers);
     binarymatrix_t exp_H = init_binary_matrix(H.row_numbers * EXTENSION_DEGREE, H.column_numbers * EXTENSION_DEGREE);
     expansion_check_mat(H, exp_H);
@@ -221,7 +221,7 @@ int key_pair_gen()
     //display_binary_matrix(punct_mat);
     return_value=gauss_elim(punct_mat);
     display_binary_matrix(punct_mat);
-    
+    */
 
     if (return_value != punct_mat.row_numbers)
 		{
