@@ -53,7 +53,7 @@ void generate_random_vector(int m, gf_t *vect)
         U[v + 1] = tmp;
     }
     memcpy(vect, U + 1, (m) * sizeof(gf_t));
-    display_no_binary_vect(vect,m);
+    
     free(random_bytes);
     close(urandom);
 }
@@ -96,7 +96,7 @@ void rs_support(gf_t *S, gf_t *L)
         L[i]=gf_antilog[V[i]%gf_card()];
     }
 
-    
+    display_no_binary_vect(L,code_length);
     
 }
 
