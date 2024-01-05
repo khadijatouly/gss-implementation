@@ -102,8 +102,8 @@ int key_pair_gen()
     rs_support(S, L);
     no_binary_reed_solomon_secret_check_matrix(H, S, L);
     display_no_binary_matrix(H);
-    //printf("Colonne=%d\n",H.column_numbers);
-    //printf("Ligne=%d\n",H.row_numbers);
+    printf("Colonne=%d\n",H.column_numbers);
+    printf("Ligne=%d\n",H.row_numbers);
     binarymatrix_t exp_H = init_binary_matrix(H.row_numbers * EXTENSION_DEGREE, H.column_numbers * EXTENSION_DEGREE);
     expansion_check_mat(H, exp_H);
     display_binary_matrix(exp_H);
