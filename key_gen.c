@@ -52,6 +52,7 @@ void generate_random_vector(int m, gf_t *vect)
     }
     memcpy(vect, U + 1, (m) * sizeof(gf_t));
     free(random_bytes);
+    close(urandom);
 }
 
 void init_random_element(gf_t *U) {
