@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
+#include <fcntl.h>
+#include <unistd.h>
 
 #include "key_gen.h"
 #include "gf_operation.h"
@@ -14,12 +16,22 @@ void generate_random_vector(int m, gf_t *vect)
     int i=0;
     U = (gf_t *)calloc(gf_card(), sizeof(gf_t));
     srand(time(NULL));
+    unsigned char buffer[512];
+    int urandom = open("/dev/urandom", O_RDONLY);
+
+    if (urandom == -1) {
+        perror("Erreur lors de l'ouverture de /dev/urandom");
+        return 1;
+    }
+    ssize_t bytesRead = read(urandom, buffer, sizeof(buffer));
+
+
     unsigned char *random_bytes = malloc(gf_card() * sizeof(gf_t));
     unsigned char entropy_input[48];
     unsigned char personalization_string[48];
     
     for (i=0; i<48; i++){
-        entropy_input[i] = rand();
+        entropy_input[i] = buffer[i];
         personalization_string[i] = rand();
         }
 
