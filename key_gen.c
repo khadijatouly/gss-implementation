@@ -83,7 +83,8 @@ void init_random_element(gf_t *U) {
 
 
 void rs_support(gf_t *S, gf_t *L)
-{   gf_t *U, *V;
+{   /*
+    gf_t *U, *V;
     int i=0; 
     U = (gf_t *)calloc(gf_card(), sizeof(gf_t));
     V= (gf_t *)calloc(gf_card(), sizeof(gf_t));
@@ -96,15 +97,53 @@ void rs_support(gf_t *S, gf_t *L)
         L[i]=gf_antilog[V[i]%gf_card()];
     }
 
-    display_no_binary_vect(L,code_length);
+    display_no_binary_vect(L,code_length);*/
+    gf_t *L, *z;
+    z = (gf_t *)calloc(order, sizeof(gf_t));
+	L = (gf_t *)calloc(code_length, sizeof(gf_t));
+    cauchy_support_centro(z, L, 1);
     
+}
+
+void cauchy_support_centro(gf_t *z, gf_t *L, gf_t alpha)
+{
+	int i, b;
+	gf_t *U;
+	int test_u = 0, test_v = 0, test_u_inter_v = 0;
+	U = (gf_t *)calloc(gf_card(), sizeof(gf_t));
+
+	do
+	{
+		init_random_element(U);
+		for (i = 0; i < order / 2; i++)
+		{
+			z[i] = U[i + 1];
+			z[order - 1 - i] = z[i] ^ alpha;
+			Remove_From_U(z[i], U);
+			Remove_From_U(z[order - 1 - i], U);
+		}
+		for (b = 0; b < code_length / order; b++)
+		{
+			for (i = 0; i < order / 2; i++)
+			{
+				L[b * order + i] = U[order + b * order + i];
+				L[b * order + order - 1 - i] = L[b * order + i] ^ alpha;
+				Remove_From_U(L[b * order + i], U);
+				Remove_From_U(L[b * order + order - 1 - i], U);
+			}
+		}
+		test_u = Test_disjoint(L, code_length);
+		test_v = Test_disjoint(z, order);
+		test_u_inter_v = disjoint_test(z, L);
+
+	} while ((test_u != 0) || (test_v != 0) || (test_u_inter_v != 0));
 }
 
 int key_pair_gen()
 {
     //int return_value = 1;
     
-    gf_t *S, *L;
+    gf_t *S, *L,*z;
 	int return_value = 1;
     init_gf(EXTENSION_DEGREE);
     assert( code_length <= gf_card() );
@@ -117,11 +156,14 @@ int key_pair_gen()
     {
 
     S = (gf_t *)calloc(code_length, sizeof(gf_t));
+    z = (gf_t *)calloc(order, sizeof(gf_t));
     L = (gf_t *)calloc(code_length, sizeof(gf_t));
-    rs_support(S, L);
+    //rs_support(S, L);
+    cauchy_support_centro(z, L, 1);
     //display_no_binary_vect(S,code_length);
 	//display_no_binary_vect(L,code_length);
-    no_binary_reed_solomon_secret_check_matrix(H, S, L);
+   // no_binary_reed_solomon_secret_check_matrix(H, S, L);
+    Cauchy_check_matrix(H, z, L);
     //display_no_binary_matrix(H);
     printf("Colonne=%d\n",H.column_numbers);
     printf("Ligne=%d\n",H.row_numbers);

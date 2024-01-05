@@ -74,5 +74,6 @@ binarymatrix_t *random_max_rank_matrix_list(int size, int mu);
 binarymatrix_t *generate_subspaces(int dimension, int size);
 void print_vect(gf_t *v, int len, char *text,float scale);
 void display_no_binary_vect(gf_t *v, int len);
+void Cauchy_check_matrix(matrix_t H, gf_t *z, gf_t *L);
 
 #endif
