@@ -218,9 +218,9 @@ int key_pair_gen()
     //printf("Colonne=%d\n",punct_mat.column_numbers);
     //printf("Ligne=%d\n",punct_mat.row_numbers);
     
-    display_binary_matrix(punct_mat);
-    return_value=gauss_elim(punct_mat);
     //display_binary_matrix(punct_mat);
+    return_value=gauss_elim(punct_mat);
+    display_binary_matrix(punct_mat);
     
 
     if (return_value != punct_mat.row_numbers)
