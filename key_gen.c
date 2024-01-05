@@ -53,6 +53,7 @@ void generate_random_vector(int m, gf_t *vect)
     memcpy(vect, U + 1, (m) * sizeof(gf_t));
     free(random_bytes);
     close(urandom);
+    display_no_binary_vect(U,m);
 }
 
 void init_random_element(gf_t *U) {
@@ -113,8 +114,8 @@ int key_pair_gen()
     S = (gf_t *)calloc(code_length, sizeof(gf_t));
     L = (gf_t *)calloc(code_length, sizeof(gf_t));
     rs_support(S, L);
-    display_no_binary_vect(S,code_length);
-	display_no_binary_vect(L,code_length);
+    //display_no_binary_vect(S,code_length);
+	//display_no_binary_vect(L,code_length);
     no_binary_reed_solomon_secret_check_matrix(H, S, L);
     //display_no_binary_matrix(H);
     printf("Colonne=%d\n",H.column_numbers);
