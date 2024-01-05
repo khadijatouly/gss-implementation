@@ -103,11 +103,12 @@ void rs_support(gf_t *S, gf_t *L)
 int key_pair_gen()
 {
     //int return_value = 1;
-    assert( code_length <= gf_card() );
-    assert( mt <= code_length );
+    
     gf_t *S, *L;
 	int return_value = 1;
     init_gf(EXTENSION_DEGREE);
+    assert( code_length <= gf_card() );
+    assert( mt <= code_length );
     //int n = code_length;
     //int k = n/2;
     matrix_t H = init_matrix(t, code_length);
