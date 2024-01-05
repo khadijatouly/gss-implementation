@@ -85,8 +85,8 @@ void rs_support(gf_t *S, gf_t *L)
     U = (gf_t *)calloc(gf_card(), sizeof(gf_t));
     V= (gf_t *)calloc(gf_card(), sizeof(gf_t));
     srand(time(NULL));
-    generate_random_vector(code_length, U);
-    generate_random_vector(code_length, V);
+    //generate_random_vector(code_length, U);
+    //generate_random_vector(code_length, V);
     for ( i = 0; i < code_length; i++)
     {
         S[i]=U[i];
@@ -113,8 +113,8 @@ int key_pair_gen()
     S = (gf_t *)calloc(code_length, sizeof(gf_t));
     L = (gf_t *)calloc(code_length, sizeof(gf_t));
     rs_support(S, L);
-    //display_no_binary_vect(S,code_length);
-	//display_no_binary_vect(L,code_length);
+    display_no_binary_vect(S,code_length);
+	display_no_binary_vect(L,code_length);
     no_binary_reed_solomon_secret_check_matrix(H, S, L);
     display_no_binary_matrix(H);
     printf("Colonne=%d\n",H.column_numbers);
