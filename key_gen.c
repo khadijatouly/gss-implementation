@@ -41,9 +41,10 @@ void generate_random_vector(int m, gf_t *vect)
     for (i = 0; i < gf_card(); i++)
     {
         U[i] = i;
+         printf("%d ", U[i]);
     }
-
-    display_no_binary_vect(U,m);
+    printf("finU \n");
+    //display_no_binary_vect(U,m);
     int j = 0;
     for (j = 0; j < gf_card(); j++)
     {
