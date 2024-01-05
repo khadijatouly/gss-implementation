@@ -100,7 +100,7 @@ int key_pair_gen()
     S = (gf_t *)calloc(code_length, sizeof(gf_t));
     L = (gf_t *)calloc(code_length, sizeof(gf_t));
     rs_support(S, L);
-    no_binary_reed_solomon_secret_check_matrix(H, S, L);
+    /*no_binary_reed_solomon_secret_check_matrix(H, S, L);
     display_no_binary_matrix(H);
     printf("Colonne=%d\n",H.column_numbers);
     printf("Ligne=%d\n",H.row_numbers);
@@ -121,7 +121,7 @@ int key_pair_gen()
     if (return_value != punct_mat.row_numbers)
 		{
 			binary_matrix_free(punct_mat);
-		}
+		}*/
     //binary_matrix_free(punct_mat);
     //binary_matrix_free(exp_H);
     //no_binary_matrix_free(H);
