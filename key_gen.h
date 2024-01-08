@@ -5,6 +5,8 @@
 #ifndef KEY_GEN
 #define KEY_GEN
 
+extern binarymatrix_t R;
+
 void generate_random_vector(int m, gf_t *vect);
 void init_random_element(gf_t *U);
 void rs_support(gf_t *S, gf_t *L);

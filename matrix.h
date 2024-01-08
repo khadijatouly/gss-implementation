@@ -42,6 +42,7 @@ binarymatrix_t matrix_swap_columns(binarymatrix_t A, int column_1, int column_2)
 
 void display_binary_matrix(binarymatrix_t A);
 void display_no_binary_matrix(matrix_t A);
+void display_binary_generator_matrix(binarymatrix_t A);
 
 void transpose_binary_matrix(binarymatrix_t A, binarymatrix_t transpose_A);
 void transpose_no_binary_matrix(matrix_t A, matrix_t transpse_A);
@@ -55,9 +56,9 @@ void binary_reed_solomon_secret_check_matrix(binarymatrix_t H, gf_t *S, gf_t *L)
 void G_mat_pub(binarymatrix_t A, binarymatrix_t H_syst);
 binarymatrix_t mat_from_pk(const unsigned char *pk);
 
-void product_vector_matrix(unsigned long *result, unsigned char *u, binarymatrix_t A);
+void product_vector_matrix(gf_t *result, gf_t *u, binarymatrix_t A);
 
-void expansion(gf_t *v, int len, binarymatrix_t A);
+void expansion(gf_t *v, int len, binarymatrix_t A, int base);
 void expansion_gen_mat(matrix_t G, binarymatrix_t exp_G);
 void expansion_check_mat(matrix_t H, binarymatrix_t exp_H);
 
@@ -75,5 +76,8 @@ binarymatrix_t *generate_subspaces(int dimension, int size);
 void print_vect(gf_t *v, int len, char *text,float scale);
 void display_no_binary_vect(gf_t *v, int len);
 binarymatrix_t punct_block_matrix_reduit(binarymatrix_t exp_H, binarymatrix_t *proj_mats);
+
+void pk_from_G(binarymatrix_t G, binarymatrix_t R);
+void pk_from_H(binarymatrix_t H, binarymatrix_t R);
 
 #endif

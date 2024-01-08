@@ -4,12 +4,11 @@
 #include "matrix.h"
 #include "key_gen.h"
 #include "param.h"
+#include "cipher.h"
 
 int main(void)
 {
-    /* code */
-    key_pair_gen();
-    
+    cipher();
     // mingw32-make.exe()
     return 0;
 }

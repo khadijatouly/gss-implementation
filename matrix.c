@@ -107,6 +107,23 @@ void display_binary_matrix(binarymatrix_t A)
     printf("\n");
 }
 
+void display_binary_generator_matrix(binarymatrix_t A)
+{
+    int i = 0;
+    int j = 0;
+    for (i = 0; i < A.row_numbers; i++)
+    {
+        for (j = 0; j < A.column_numbers; j++)
+        {
+            if (j == A.row_numbers)
+                printf("|");
+            printf("%lu ", mat_coeff(A, i, j));
+        }
+        printf("\n");
+    }
+    printf("\n");
+}
+
 void display_no_binary_matrix(matrix_t A)
 {
     int i = 0;
@@ -263,6 +280,7 @@ void no_binary_reed_solomon_secret_check_matrix(matrix_t H, gf_t *S, gf_t *L)
  */
 void G_mat_pub(binarymatrix_t A, binarymatrix_t H_syst)
 {
+    printf("matrice generatrice systematique\n");
     int i = 0, k = 0;
     for (i = 0; i < A.row_numbers; i++)
     {
@@ -311,10 +329,10 @@ void G_mat_pub(binarymatrix_t A, binarymatrix_t H_syst)
 }*/
 
 /**
- * fonction qui permet de calculer le produit entre un vecteur et un matrice
+ * fonction qui permet de calculer le produit entre un vecteur et une matrice
  * */
 
-void product_vector_matrix(unsigned long *result, unsigned char *u, binarymatrix_t A)
+/*void product_vector_matrix(unsigned long *result, unsigned char *u, binarymatrix_t A)
 {
     int i = 0;
     for (i = 0; i < A.row_numbers; i++)
@@ -328,20 +346,18 @@ void product_vector_matrix(unsigned long *result, unsigned char *u, binarymatrix
             }
         }
     }
-}
+}*/
 
 // fonction qui permet d'étendre un vecteur
-void expansion(gf_t *v, int len, binarymatrix_t A)
+void expansion(gf_t *v, int len, binarymatrix_t A, int base)
 {
-    int i = 0;
-    for (i = 0; i < len; i++)
+    for (int i = 0; i < len; i++)
     {
-        int j = 0;
-        for (j = 0; j < EXTENSION_DEGREE; j++)
+        for (int j = 0; j < base; j++)
         {
             if (v[i] & (1 << j))
             {
-                mat_set_coeff_to_one(A, 0, (i * EXTENSION_DEGREE) + j);
+                mat_set_coeff_to_one(A, 0, (i * base) + j);
             }
         }
     }
@@ -597,6 +613,36 @@ void display_no_binary_vect(gf_t *v, int len)
     printf("\n");
 }
 
+void pk_from_G(binarymatrix_t G, binarymatrix_t R) {
+    printf("public key\n");
+    for (int i = 0; i < R.row_numbers; i++)
+    {
+        for (int j = 0; j < R.column_numbers; j++)
+        {
+            if (mat_coeff(G, i, G.row_numbers+j))
+            {
+                mat_set_coeff_to_one(R,i,j);
+            }
+        }
+        
+    }
+    
+}
+
+void pk_from_H(binarymatrix_t H, binarymatrix_t R) {
+    printf("public key\n");
+    for (int i = 0; i < H.row_numbers; i++)
+    {
+        for (int j = 0; j < H.column_numbers-H.row_numbers; j++)
+        {
+            if (mat_coeff(H, i, j))
+            {
+                mat_set_coeff_to_one(R,j,i);
+            }
+        }
+    }
+}
+
 /*binarymatrix_t *generate_subspaces(int dimension, int size)
 {
     unsigned char *random_bytes = malloc(dimension * sizeof(int));
@@ -627,3 +673,18 @@ void display_no_binary_vect(gf_t *v, int len)
     free(random_bytes);
     return proj_mats;
 }*/
+
+void product_vector_matrix(gf_t *result, gf_t *u, binarymatrix_t A)
+{
+    gf_t bit = 0;
+    for (int i = 0; i < A.column_numbers; i++)
+    {
+        for (int j = 0; j < A.row_numbers; j++)
+        {
+            bit ^= u[j] & A.element[j][i];
+        }
+        result[i] = bit;
+        bit = 0;
+    }
+}
+

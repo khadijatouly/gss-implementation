@@ -9,6 +9,8 @@
 #include "key_gen.h"
 #include "gf_operation.h"
 
+binarymatrix_t R;
+
 void generate_random_vector(int m, gf_t *vect)
 {
     int v;
@@ -146,6 +148,14 @@ int key_pair_gen()
     //no_binary_matrix_free(H);
     
     }
-    
+
+    printf("En dehors du while \n");
+    display_binary_matrix(punct_mat);
+
+    R = init_binary_matrix(punct_mat.column_numbers-punct_mat.row_numbers, punct_mat.row_numbers);
+    pk_from_H(punct_mat, R);
+    display_binary_matrix(R);
+    //display_binary_matrix(pk_from_H(punct_mat, R));
+
     return 1;
 }
