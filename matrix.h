@@ -80,4 +80,6 @@ binarymatrix_t punct_block_matrix_reduit(binarymatrix_t exp_H, binarymatrix_t *p
 void pk_from_G(binarymatrix_t G, binarymatrix_t R);
 void pk_from_H(binarymatrix_t H, binarymatrix_t R);
 
+void expansion_error_vector(gf_t *v, int len, gf_t *exp_v, int base);
+
 #endif

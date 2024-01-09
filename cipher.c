@@ -49,10 +49,10 @@ void concat(gf_t *concate, gf_t *u,gf_t *v) {
     } 
 }
 
-void add_error_vector(gf_t *cipher, gf_t *concate, binarymatrix_t exp_e) {
-    for (int i = 0; i < R.column_numbers; i++)
+void add_error_vector(gf_t *cipher, gf_t *concate, gf_t *exp_e) {
+    for (int i = 0; i < code_length*EXT_MU; i++)
     {
-        cipher[i] = concate[i]^exp_e.element[0][i];
+        cipher[i] = concate[i]^exp_e[i];
     }
     
 }
@@ -74,11 +74,11 @@ void cipher() {
     display_no_binary_vect(concate, R.row_numbers+R.column_numbers);
     gf_t *e = (gf_t*)calloc(code_length, sizeof(gf_t));
     gen_error_vector(e, code_length);
-    binarymatrix_t exp_e = init_binary_matrix(1, R.row_numbers+R.column_numbers);
-    expansion(e, code_length, exp_e, EXT_MU);
+    gf_t * exp_e = (gf_t *)calloc(code_length*EXT_MU, sizeof(gf_t));
+    expansion_error_vector(e, code_length, exp_e, EXT_MU);
     gf_t * cipher = (gf_t *)calloc(R.row_numbers+R.column_numbers, sizeof(gf_t));
     printf("Le vecteur d'erreur \n");
-    display_binary_matrix(exp_e);
+    display_no_binary_vect(exp_e, code_length*EXT_MU);
     add_error_vector(cipher, concate, exp_e);
     printf("Le chiffre \n");
     display_no_binary_vect(cipher, R.row_numbers+R.column_numbers);

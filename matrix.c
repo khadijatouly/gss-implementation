@@ -688,3 +688,17 @@ void product_vector_matrix(gf_t *result, gf_t *u, binarymatrix_t A)
     }
 }
 
+void expansion_error_vector(gf_t *v, int len, gf_t *exp_v, int base)
+{
+    for (int i = 0; i < len; i++)
+    {
+        for (int j = 0; j < base; j++)
+        {
+            if (v[i] & (1 << j))
+            {
+                exp_v[i*base+j] = 1;
+            }
+        }
+    }
+}
+
