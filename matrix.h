@@ -56,7 +56,8 @@ void binary_reed_solomon_secret_check_matrix(binarymatrix_t H, gf_t *S, gf_t *L)
 void G_mat_pub(binarymatrix_t A, binarymatrix_t H_syst);
 binarymatrix_t mat_from_pk(const unsigned char *pk);
 
-void product_vector_matrix(gf_t *result, gf_t *u, binarymatrix_t A);
+void product_vector_matrix1(gf_t *result, gf_t *u, binarymatrix_t A);
+void product_vector_matrix(binarymatrix_t result, unsigned char *u, binarymatrix_t A);
 
 void expansion(gf_t *v, int len, binarymatrix_t A, int base);
 void expansion_gen_mat(matrix_t G, binarymatrix_t exp_G);
@@ -81,5 +82,8 @@ void pk_from_G(binarymatrix_t G, binarymatrix_t R);
 void pk_from_H(binarymatrix_t H, binarymatrix_t R);
 
 void expansion_error_vector(gf_t *v, int len, gf_t *exp_v, int base);
+
+binarymatrix_t *random_max_rank_matrix_list_transpose(int size, binarymatrix_t *proj_mats);
+binarymatrix_t punct_block_matrix_inverse(binarymatrix_t punct_mat, binarymatrix_t *proj_mats, int size);
 
 #endif

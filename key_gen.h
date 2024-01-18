@@ -6,6 +6,8 @@
 #define KEY_GEN
 
 extern binarymatrix_t R;
+extern binarymatrix_t punct_mat;
+extern binarymatrix_t *proj_mats;
 
 void generate_random_vector(int m, gf_t *vect);
 void init_random_element(gf_t *U);

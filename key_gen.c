@@ -10,6 +10,8 @@
 #include "gf_operation.h"
 
 binarymatrix_t R;
+binarymatrix_t punct_mat;
+binarymatrix_t *proj_mats;
 
 void generate_random_vector(int m, gf_t *vect)
 {
@@ -116,7 +118,6 @@ int key_pair_gen()
     //int n = code_length;
     //int k = n/2;
     matrix_t H = init_matrix(t, code_length);
-    binarymatrix_t punct_mat;
     while (return_value != punct_mat.row_numbers)
     {
 
@@ -128,7 +129,7 @@ int key_pair_gen()
     binarymatrix_t exp_H = init_binary_matrix(H.row_numbers * EXTENSION_DEGREE, H.column_numbers * EXTENSION_DEGREE);
     expansion_check_mat(H, exp_H);
     display_binary_matrix(exp_H);
-    binarymatrix_t *proj_mats = random_max_rank_matrix_list(code_length, EXT_MU);
+    proj_mats = random_max_rank_matrix_list(code_length, EXT_MU);
     punct_mat = init_binary_matrix(H.row_numbers * EXTENSION_DEGREE, H.column_numbers * EXT_MU);
     punct_mat = punct_block_matrix_reduit(exp_H, proj_mats);
     //printf("Colonne=%d\n",punct_mat.column_numbers);
@@ -137,7 +138,7 @@ int key_pair_gen()
     display_binary_matrix(punct_mat);
     return_value=gauss_elim(punct_mat);
     display_binary_matrix(punct_mat);
-    
+
 
     if (return_value != punct_mat.row_numbers)
 		{
@@ -146,7 +147,6 @@ int key_pair_gen()
     //binary_matrix_free(punct_mat);
     //binary_matrix_free(exp_H);
     //no_binary_matrix_free(H);
-    
     }
 
     R = init_binary_matrix(punct_mat.column_numbers-punct_mat.row_numbers, punct_mat.row_numbers);

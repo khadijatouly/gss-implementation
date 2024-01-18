@@ -332,21 +332,23 @@ void G_mat_pub(binarymatrix_t A, binarymatrix_t H_syst)
  * fonction qui permet de calculer le produit entre un vecteur et une matrice
  * */
 
-/*void product_vector_matrix(unsigned long *result, unsigned char *u, binarymatrix_t A)
+void product_vector_matrix(binarymatrix_t result, unsigned char *u, binarymatrix_t A)
 {
-    int i = 0;
-    for (i = 0; i < A.row_numbers; i++)
+    gf_t bit = 0;
+    for (int i = 0; i < A.column_numbers; i++)
     {
-        if ((u[i / 8] >> (i % 8)) & 1)
+        for (int j = 0; j < A.row_numbers; j++)
         {
-            int j = 0;
-            for (j = 0; j < A.rwdcnt; j++)
-            {
-                result[j] ^= A.element[i][j];
-            }
+            bit ^= u[j] & A.element[j][i];
         }
+        if (bit)
+        {
+            mat_set_coeff_to_one(result,0,i);
+        }
+        
+        bit = 0;
     }
-}*/
+}
 
 // fonction qui permet d'étendre un vecteur
 void expansion(gf_t *v, int len, binarymatrix_t A, int base)
@@ -674,7 +676,7 @@ void pk_from_H(binarymatrix_t H, binarymatrix_t R) {
     return proj_mats;
 }*/
 
-void product_vector_matrix(gf_t *result, gf_t *u, binarymatrix_t A)
+void product_vector_matrix1(gf_t *result, gf_t *u, binarymatrix_t A)
 {
     gf_t bit = 0;
     for (int i = 0; i < A.column_numbers; i++)
@@ -700,5 +702,47 @@ void expansion_error_vector(gf_t *v, int len, gf_t *exp_v, int base)
             }
         }
     }
+}
+
+binarymatrix_t *random_max_rank_matrix_list_transpose(int size, binarymatrix_t *proj_mats)
+{
+    binarymatrix_t *proj_mats_transpose;
+    proj_mats_transpose = (binarymatrix_t *)calloc(size, sizeof(binarymatrix_t));
+    int i = 0;
+    for (i = 0; i < size; i++)
+    {
+        binarymatrix_t transpose = init_binary_matrix(proj_mats[i].column_numbers, proj_mats[i].row_numbers);
+        transpose_binary_matrix(proj_mats[i], transpose);
+        proj_mats_transpose[i] = transpose;
+    }
+    return proj_mats_transpose;
+}
+
+binarymatrix_t punct_block_matrix_inverse(binarymatrix_t punct_mat, binarymatrix_t *proj_mats, int size)
+{
+    printf("Punct inv \n");
+    int i = 0, j = 0, k = 0;
+    gf_t bit = 0;
+    binarymatrix_t *proj_mats_transpose = random_max_rank_matrix_list_transpose(size, proj_mats);
+    binarymatrix_t punct_mat_inverse;
+    punct_mat_inverse = init_binary_matrix(punct_mat.row_numbers, (punct_mat.column_numbers / EXT_MU) * EXTENSION_DEGREE);
+    for (i = 0; i < punct_mat_inverse.row_numbers; i++)
+    {
+        for (j = 0; j < punct_mat_inverse.column_numbers; j++)
+        {
+            int depart = (j / EXTENSION_DEGREE) * EXT_MU;
+            for (k = depart; k < depart + EXT_MU; k++)
+            {
+                bit ^= mat_coeff(punct_mat, i, k) & mat_coeff(proj_mats_transpose[j / EXTENSION_DEGREE], k % EXT_MU, j % EXTENSION_DEGREE);
+            }
+            if (bit)
+            {
+                mat_set_coeff_to_one(punct_mat_inverse, i, j);
+            }
+            bit = 0;
+        }
+    }
+
+    return punct_mat_inverse;
 }
 

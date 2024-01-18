@@ -1,8 +1,8 @@
 # Project: shrivastava
 # Makefile created by ouzdeville
 CC       = gcc
-OBJ      = gf_operation.o rng.o matrix.o key_gen.o util.o cipher.o main.o
-LINKOBJ  = gf_operation.o rng.o matrix.o key_gen.o util.o cipher.o main.o
+OBJ      = gf_operation.o rng.o matrix.o key_gen.o util.o cipher.o decipher.o decode.o main.o
+LINKOBJ  = gf_operation.o rng.o matrix.o key_gen.o util.o cipher.o decipher.o decode.o main.o
 LIBS     = -L/usr/lib -lssl -lcrypto
 INCS     = 
 CXXINCS  = 
