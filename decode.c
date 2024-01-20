@@ -18,11 +18,26 @@ gf_t euclide_etendu(gf_t a, gf_t b, gf_t *u, gf_t *v) {
     
 }
 
-gf_t syndrome_polynomial(matrix_t syndrome) {
-    gf_t S = 0;
-    for (int i = 0; i < syndrome.row_numbers; i++)
+gf_t *syndrome(matrix_t y, gf_t *S, gf_t *L, int d) {
+    gf_t *synd = (gf_t *)calloc(d-1, sizeof(gf_t));
+    gf_t s=0;
+    for (int i = 0; i < d-1; i++)
     {
-         S = gf_add(S, gf_mul(syndrome.coefficient[i][0], gf_pow(2,i)));
+        for (int j = 0; j < code_length; j++)
+        {
+            s ^= gf_mul(y.coefficient[i][j], gf_mul(gf_pow(S[j], i), L[j]));
+        }
+        synd[i] = s;
+        s=0;
+    }
+    
+}
+
+gf_t syndrome_polynomial(gf_t * syndrome) {
+    gf_t S = 0;
+    for (int i = 0; i < sizeof(syndrome)/sizeof(syndrome[0]); i++)
+    {
+         S = gf_add(S, gf_mul(syndrome[i], gf_pow(2,i)));
     }
     return S;
     
@@ -82,4 +97,27 @@ void error_location(gf_t *S, gf_t lambda, int *position_error) {
         }
         
     } 
+}
+
+void error_value(gf_t *S, gf_t *L, gf_t lambda, gf_t gamma, int *position, gf_t *error_values) {
+    gf_t *inv_S = inverse_support(S);
+    gf_t e;
+    gf_t deriv_lambda = derive_lambda(lambda);
+    for (int i = 0; i < sizeof(position)/sizeof(position[0]); i++)
+    {
+        e = gf_mul(gf_div((gf_ord()-S[position[i]]), L[position[i]]), gf_div(gamma%inv_S[position[i]], deriv_lambda%inv_S[position[i]]));
+        error_values[i] = e;
+    }
+}
+
+void decode(matrix_t y, gf_t *S, gf_t *L, int d) {
+    gf_t * synd = syndrome(y, S, L, d);
+    gf_t synd_pol = syndrome_polynomial(synd);
+    gf_t lambda;
+    gf_t gamma;
+    compute_polynomials(gf_pow(2, d-1), synd_pol, lambda, gamma);
+    int * error_position = calloc(t, sizeof(int));
+    error_location(S, lambda, error_position);
+    gf_t *error_values = calloc(t, sizeof(gf_t));
+    error_value(S, L, lambda, gamma,error_position, error_values);
 }
